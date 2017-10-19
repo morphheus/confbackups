@@ -36,11 +36,11 @@ set smartcase
 set undolevels=1000
 set list
 set autowrite
-set lcs=tab:>-,nbsp:_
+set showbreak=\\
+set lcs=tab:\|\ ,nbsp:~,extends:>,precedes:<
 set timeoutlen=500
 set splitbelow
 set splitright
-
 
 "################
 " SHORTCUTS

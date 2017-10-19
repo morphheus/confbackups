@@ -3,6 +3,7 @@ run_svttest_file="/mnt/c/introspectDocs/SvtPython/runSvtTest.py"
 run_svttest_file_windows='"C:/introspectDocs/SvtPython/runSvtTest.py"'
 test_folder='C:/introspectDocs/Introspect/Tests'
 alias vim=nvim
+alias vimrc="nvim ~/.config/nvim/init.vim"
 #alias wcpython="wcmd c:/Python27/python.exe -u"
 #alias wcpip="wcmd C:/Python27/Scripts/pip.exe"
 

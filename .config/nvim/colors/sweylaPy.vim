@@ -25,7 +25,7 @@ hi PmenuSel       guifg=#00FF00 guibg=#B3A9BD ctermfg=255 ctermbg=249
 hi Cursor        guifg=#000000 guibg=#A0A0A0 ctermbg=252 gui=none
 hi iCursor       guifg=#000000 guibg=#00FF00 ctermbg=252 gui=none
 hi Normal        guifg=#00FF00 guibg=#000000 gui=none ctermfg=46  ctermbg=0   cterm=none
-hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=240  ctermbg=0   cterm=none
+hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=245  ctermbg=0   cterm=none
 hi LineNr        guifg=#585858 guibg=#000000 gui=none ctermfg=240 ctermbg=0   cterm=none
 hi StatusLine    guifg=#00d7ff guibg=#3a3a3a gui=none ctermfg=45 ctermbg=235  cterm=none
 hi StatusLineNC  guifg=#005faf guibg=#262626 gui=none ctermfg=25 ctermbg=234  cterm=none
