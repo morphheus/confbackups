@@ -36,7 +36,7 @@ set smartcase
 set undolevels=1000
 set list
 set autowrite
-set showbreak=\\
+set showbreak=\ \ 
 set lcs=tab:\|\ ,nbsp:~,extends:>,precedes:<
 set timeoutlen=500
 set splitbelow
@@ -124,7 +124,13 @@ autocmd VimEnter * nnoremap + <C-a>
 autocmd VimEnter * nnoremap _ <C-x>
 
 " Insert enter from normal nmode
-nnoremap <expr> <Enter> &ma?"i\<cr>\<esc>":"\<cr>"
+nnoremap <expr> <Enter> &ma?"i\<cr>\<esc>`^":"\<cr>"
+
+" Insert enter and spaces from normal mode. Overwrites any autoindenting
+nnoremap <silent> g<Enter> :<C-U> 
+  \let currentColumn=col(".")<CR>
+  \i<cr><esc>`^
+  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>l
 
 " Search visual selection
 vnoremap <silent> * :<C-U> 
