@@ -75,7 +75,7 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    alias ls='ls --color'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -117,7 +117,7 @@ fi
 # Better colors 
 export PS1="\[\033[38;5;45m\][\t\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\033[38;5;45m\]\W]\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]"
 export DISPLAY=:0
-
+export LS_COLORS="di=1;36:ln=1;35:so=33:pi=33:ex=1;93:bd=33:cd=33:su=33:sg=33:tw=1;36:ow=1;36"
 # Add SvtPython to pythonpath
 export PYTHONPATH="${PYTHONPATH}:/mnt/c/introspectDocs/SvtPython/"
 

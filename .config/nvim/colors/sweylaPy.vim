@@ -14,6 +14,7 @@ set t_Co=256
 
 let colors_name = "sweylaPy"
 
+
 hi CursorLine     cterm=none ctermbg=235
 hi CursorColumn   guibg=#000000 ctermbg=16
 hi MatchParen     guifg=#191919 guibg=#00d700 gui=bold ctermfg=255 ctermbg=27 cterm=bold
@@ -21,7 +22,8 @@ hi Pmenu          guifg=#00FF00 guibg=#323232 ctermfg=255 ctermbg=236
 hi PmenuSel       guifg=#00FF00 guibg=#B3A9BD ctermfg=255 ctermbg=249
 "
 " Background and menu colors
-hi Cursor        guifg=#000000 guibg=#00FF00 ctermbg=120 gui=none
+hi Cursor        guifg=#000000 guibg=#A0A0A0 ctermbg=252 gui=none
+hi iCursor       guifg=#000000 guibg=#00FF00 ctermbg=252 gui=none
 hi Normal        guifg=#00FF00 guibg=#000000 gui=none ctermfg=46  ctermbg=0   cterm=none
 hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=240  ctermbg=0   cterm=none
 hi LineNr        guifg=#585858 guibg=#000000 gui=none ctermfg=240 ctermbg=0   cterm=none
@@ -44,7 +46,7 @@ hi DiffDelete       guibg=#3F000A gui=none ctermbg=0 ctermfg=196 cterm=none
 hi TabLineFill      guibg=#5E5E5E gui=none ctermbg=235 ctermfg=228 cterm=none
 hi TabLine          guifg=#FFB053 gui=bold ctermbg=233 ctermfg=243 cterm=bold
 hi TabLineSel       guifg=#FFB053 gui=bold ctermbg=238 ctermfg=34 cterm=bold
-hi Search           cterm=bold ctermfg=249 ctermbg=21
+hi Search           cterm=bold ctermfg=250 ctermbg=19
 
 
 " Syntax highlighting
@@ -60,7 +62,7 @@ hi Keyword guifg=#ffaf87 gui=none ctermfg=216 cterm=none
 hi String guifg=#00D787 gui=none ctermfg=42 cterm=none
 hi Type guifg=#00d7af gui=bold ctermfg=43 cterm=bold
 hi pythonBuiltin guifg=#00d7ff gui=none ctermfg=45 cterm=none
-hi ColorColumn ctermbg=232
+hi ColorColumn ctermbg=234
 
 hi SignColumn  cterm=bold ctermfg=255 ctermbg=00
 autocmd VimEnter * hi NeomakeWarningDefault  ctermfg=255  ctermbg=52   cterm=none
