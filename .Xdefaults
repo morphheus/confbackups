@@ -1,0 +1,8 @@
+XTerm*Background: black
+XTerm*Foreground: green
+XTerm*faceName: DejaVu Sans Mono:pixelsize=12
+XTerm*saveLines: 1000
+XTerm*HiForeColor: white
+XTerm*HiBackColor: #c06077
+XTerm*geometry: +50+10
+xterm*cursorColor: gray
