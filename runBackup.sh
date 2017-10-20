@@ -7,7 +7,8 @@ declare -a foldersToBackup=(".config/nvim/colors"
                             ".config/nvim/init.vim"
                             ".config/nvim/pylintrc_introspect"
                             ".bash_aliases"
-                            ".bashrc")
+                            ".bashrc"
+                            ".Xdefaults")
 
 for i in "${foldersToBackup[@]}"
 do 
