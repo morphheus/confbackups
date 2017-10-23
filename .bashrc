@@ -121,6 +121,9 @@ export LS_COLORS="di=1;36:ln=1;35:so=33:pi=33:ex=1;93:bd=33:cd=33:su=33:sg=33:tw
 # Add SvtPython to pythonpath
 export PYTHONPATH="${PYTHONPATH}:/mnt/c/introspectDocs/SvtPython/"
 
+# Set nvim as default editor
+export EDITOR=nvim
+export VISUAL=nvim
 
 # FZF stuff
 export FZF_DEFAULT_OPTS='-m --height 20 --color=bg+:236,hl+:51,hl:51 --bind=ctrl-j:down,ctrl-k:up'

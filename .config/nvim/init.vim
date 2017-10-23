@@ -41,9 +41,10 @@ set lcs=tab:\|\ ,nbsp:~,extends:>,precedes:<
 set timeoutlen=500
 set splitbelow
 set splitright
+set errorformat=%f:%l:\ %m
 
 "################
-" SHORTCUTS
+" BINDINGS
 "################
 
 let mapleader = " "
@@ -147,6 +148,59 @@ vnoremap <silent> <Leader>8 :<C-U>
   \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>:set hls<CR>
 
+" ----------
+" Location list/quickfix bindings
+" The bindings switch depending wether the loclist or the quickfix was last
+" opened
+let g:loclist_is_open = 0
+let g:quickfix_is_open = 0
+
+function! LocListToggle()
+    if g:loclist_is_open
+        lclose
+        let g:loclist_is_open = 0
+    elseif g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        let g:loclist_return_to_window = winnr()
+        lopen 8
+        execute g:loclist_return_to_window . "wincmd w"
+        let g:loclist_is_open = 1
+
+        nnoremap <silent> <leader><Space> :ll<cr>
+        nnoremap <silent> <leader>n :lnext<cr>
+        nnoremap <silent> <leader>N :lprev<cr>
+    endif
+endfunction
+
+function! QuickfixToggle()
+    if g:loclist_is_open
+        lclose
+        let g:loclist_is_open = 0
+    elseif g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        let g:quickfix_return_to_window = winnr()
+        botright copen 7
+        " Global bottom window for quickfix
+        execute g:quickfix_return_to_window . "wincmd w"
+        let g:quickfix_is_open = 1
+
+        nnoremap <silent> <leader><Space> :cc<cr>
+        nnoremap <silent> <leader>n :cnext<cr>
+        nnoremap <silent> <leader>N :cprev<cr>
+    endif
+endfunction
+
+nnoremap <silent> <leader>a :call LocListToggle()<cr>
+nnoremap <silent> <leader>A :call QuickfixToggle()<cr>
+
+" Default to loclist bindings
+nnoremap <silent> <leader><Space> :ll<cr>
+nnoremap <silent> <leader>n :lnext<cr>
+nnoremap <silent> <leader>N :lprev<cr>
 
 "################
 " PLUGINS
@@ -257,25 +311,8 @@ set shortmess+=c
 
 " -------------------
 " neomake
-let g:loclist_is_open = 0
-function! LocListToggle()
-    if g:loclist_is_open
-        lclose
-        let g:loclist_is_open = 0
-    else
-        let g:loclist_return_to_window = winnr()
-        lopen 8
-        execute g:loclist_return_to_window . "wincmd w"
-        let g:loclist_is_open = 1
-    endif
-endfunction
 
 autocmd! BufWritePost * Neomake
-nnoremap <silent> <leader>a :call LocListToggle()<cr>
-"nnoremap <silent> <leader>s :lclose<cr>
-nnoremap <silent> <leader><Space> :ll<cr>
-nnoremap <silent> <leader>n :lnext<cr>
-nnoremap <silent> <leader>N :lprev<cr>
 let g:neomake_highlight_columns=3
 
 
@@ -383,10 +420,6 @@ function! s:fzf_statusline()
 endfunction
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
-"---------------------
-" fzf-vim
-
-
 "################
 " MISC
 "################
@@ -455,7 +488,7 @@ command! SetLayout00 call g:SetLayout00()
 " nice "ide" layouy. Same as 00, but without the small window
 function! g:SetLayout01()
   set colorcolumn=80
-  execute "normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>"
+  execute "normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>:vs\<cr>"
 endfunc
 command! SetLayout01 call g:SetLayout01()
 
