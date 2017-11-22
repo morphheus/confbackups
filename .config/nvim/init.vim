@@ -42,6 +42,7 @@ set timeoutlen=500
 set splitbelow
 set splitright
 set errorformat=%f:%l:\ %m
+set shortmess+=c
 
 "################
 " BINDINGS
@@ -111,7 +112,7 @@ nnoremap <F9> :vertical resize 88<cr>
 nnoremap <F10> :vertical resize 120<cr>
 nnoremap <F12> <C-w>=
 
-"split navigation
+" Split navigation
 nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
@@ -127,11 +128,17 @@ autocmd VimEnter * nnoremap _ <C-x>
 " Insert enter from normal nmode
 nnoremap <expr> <Enter> &ma?"i\<cr>\<esc>`^":"\<cr>"
 
-" Insert enter and spaces from normal mode. Overwrites any autoindenting
+" Insert enter and adjust text to match the original cursor column
 nnoremap <silent> g<Enter> :<C-U> 
   \let currentColumn=col(".")<CR>
   \i<cr><esc>`^
   \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>l
+
+" Insert newline and add spaces to match the original cursor columns
+nnoremap <silent> go :<C-U> 
+  \let currentColumn=col(".")<CR>
+  \o<esc>`^
+  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>a
 
 " Search visual selection
 vnoremap <silent> * :<C-U> 
@@ -148,8 +155,21 @@ vnoremap <silent> <Leader>8 :<C-U>
   \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>:set hls<CR>
 
-" ----------
-" Location list/quickfix bindings
+" relative line toggle
+function! g:ToggleNuMode()
+  if(&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+command! RelToggle call g:ToggleNuMode()
+noremap <F6> :RelToggle<cr>
+
+" Location list/quickfix bindings. Can only have loclist or quickfix open at a
+" time, never both. Broken when switching windows and attempting to open a
+" new loclist there
 " The bindings switch depending wether the loclist or the quickfix was last
 " opened
 let g:loclist_is_open = 0
@@ -202,6 +222,7 @@ nnoremap <silent> <leader><Space> :ll<cr>
 nnoremap <silent> <leader>n :lnext<cr>
 nnoremap <silent> <leader>N :lprev<cr>
 
+
 "################
 " PLUGINS
 "################
@@ -230,8 +251,10 @@ Plugin 'junegunn/fzf.vim'
 
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/deoplete.nvim'
+"
+"Plugin 'zchee/deoplete-jedi'
+"Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-completion-manager'
 
 Plugin 'kassio/neoterm'
 Plugin 'neomake/neomake'
@@ -303,11 +326,14 @@ let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 " -------------------
-" doeplete
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#tag#cache_limit_size = 5000000
-set shortmess+=c
+" deoplete
+"let g:deoplete#sources#jedi#show_docstring = 1
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#tag#cache_limit_size = 5000000
+"
+" -------------------
+" nvim-completion-manager
+let g:cm_complete_popup_delay = 100
 
 " -------------------
 " neomake
@@ -319,7 +345,6 @@ let g:neomake_highlight_columns=3
 function PostprocessPylintMaker(entry)
 endfunction
 
-"\ '--init-hook=\'import sys; sys.path.append("/mnt/c/introspectDocs/SvtPython/")\''
 let g:neomake_python_pylint_maker = {
         \ 'args': [
             \ '--output-format=text',
@@ -378,11 +403,11 @@ noremap <silent> gd :tab split<cr>:VCDiff<cr>
 let g:neoterm_position="vertical"
 
 " Neoterm mappings
-"nnoremap <F1> :wa!<cr>
 nnoremap <F1> <ESC>:wa!<cr>
 inoremap <F1> <ESC>:wa!<cr>
 let g:neoterm_automap_keys = "<F2>"
 nnoremap <expr> <F3> ":Tmap " . input("Command? "). "\<Enter>"
+nnoremap <F4> :T <up>
 
 " Auto-enter insert mode when entering a terminal window
 autocmd BufWinEnter,WinEnter term://* startinsert
@@ -402,7 +427,7 @@ command! -bang FLines call fzf#vim#grep(
     \ 0, 
     \ {'options': '--reverse --prompt "FLines> "'})
 
-" fzf opening maps
+" fzf windows maps
 nnoremap <silent> <leader>q :Buffers<cr>
 nnoremap <silent> <leader>w :Files<cr>
 nnoremap <silent> <leader>/ :BLines<cr>
@@ -460,22 +485,9 @@ set foldmethod=indent foldlevel=1 foldnestmax=2
 set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 
-
 " always show the sign columns
 autocmd BufEnter *.py sign define dummy
 autocmd BufEnter *.py execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-
-" relative line toggle
-function! g:ToggleNuMode()
-  if(&relativenumber == 1)
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-endfunc
-
-command! RelToggle call g:ToggleNuMode()
-noremap <F6> :RelToggle<cr>
 
 
 " 1 main block, one terminal, one small window above the terminal
@@ -500,7 +512,6 @@ function! g:SetLayoutTex()
   execute "normal! :autocmd! BufWinEnter,WinEnter term://*\<cr>:Tnew\<cr>\<C-w>\<C-j>:resize 15\<cr>\"mp\<C-w>\<C-k>"
 endfunc
 command! SetLayoutTex call g:SetLayoutTex()
-
 
 " Set the layouts based on filetypes
 autocmd VimEnter *.py SetLayout01
