@@ -9,7 +9,6 @@ filetype indent on
 set hidden
 set noshowmode
 set expandtab
-set background=dark
 set belloff=all
 set noea
 set ff=unix
@@ -42,7 +41,7 @@ set timeoutlen=500
 set splitbelow
 set splitright
 set errorformat=%f:%l:\ %m
-set shortmess+=c
+set shortmess+=ca
 
 "################
 " BINDINGS
@@ -52,7 +51,7 @@ let mapleader = " "
 let tm=200
 
 " clear highlights
-nnoremap <C-_> :noh<CR>
+nnoremap <C-u> :noh<CR>
 
 " e from system clipboard easy. First change the killring to ctrlp
 " Copy/Past
@@ -235,7 +234,6 @@ Plugin 'VundleVim/Vundle.vim'   " let Vundle manage Vundle, required
 Plugin 'Yggdroot/indentLine'
 Plugin 'luochen1990/rainbow'
 Plugin 'Konfekt/FastFold'
-Plugin 'vheon/vim-cursormode'
 
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -251,7 +249,7 @@ Plugin 'junegunn/fzf.vim'
 
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-"
+
 "Plugin 'zchee/deoplete-jedi'
 "Plugin 'Shougo/deoplete.nvim'
 Plugin 'roxma/nvim-completion-manager'
@@ -346,10 +344,12 @@ function PostprocessPylintMaker(entry)
 endfunction
 
 let g:neomake_python_pylint_maker = {
+        \ 'exe':'python2',
         \ 'args': [
+            \ '-m', 'pylint',
             \ '--output-format=text',
             \ '--msg-template="{path}:{line}:{column}: [{msg_id} {symbol}] {msg} "',
-            \ '--rcfile=/mnt/c/introspectDocs/SvtPython/pylintrc.txt',
+            \ '--rcfile=~/Documents/SvtPython/pylintrc.txt',
             \ '--reports=no'
         \ ],
         \ 'errorformat':
@@ -423,7 +423,7 @@ autocmd FileType fzf tnoremap <buffer> <C-k> <up>
 autocmd FileType fzf tnoremap <buffer> <C-space> <enter>
 
 command! -bang FLines call fzf#vim#grep(
-    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude=tags --exclude=*\.js --exclude=*\.pyc --exclude=*\.npy  --exclude=*\.pickle --exclude=*\.exe --exclude=*\.dll --exclude=*\.gitignore --exclude=generateSvtDocs_log.txt --exclude=*\.zip --exclude=*\.gz "^$"',
+    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --exclude=tags --exclude=*\.js --exclude=*\.pyc --exclude=*\.npy  --exclude=*\.pickle --exclude=*\.exe --exclude=*\.dll --exclude=*\.gitignore --exclude=generateSvtDocs_log.txt --exclude=*\.zip --exclude=*\.gz "^$"',
     \ 0, 
     \ {'options': '--reverse --prompt "FLines> "'})
 
@@ -495,14 +495,21 @@ function! g:SetLayout00()
   set colorcolumn=80
   execute "normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>:split\<cr>\<C-w>\<C-k>\<Esc>:resize 25\<cr>\<Esc>:b1\<cr>\<C-w>\<C-h>"
 endfunc
-command! SetLayout00 call g:SetLayout00()
+command! SL0 call g:SetLayout00()
 
 " nice "ide" layouy. Same as 00, but without the small window
 function! g:SetLayout01()
   set colorcolumn=80
-  execute "normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>:vs\<cr>"
+  execute "silent normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>"
 endfunc
-command! SetLayout01 call g:SetLayout01()
+command! SL1 call g:SetLayout01()
+
+" Same as 01, but the main window has 2 splits
+function! g:SetLayout02()
+  set colorcolumn=80
+  execute "silent normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"
+endfunc
+command! SL2 call g:SetLayout02()
 
 " latexlayout
 function! g:SetLayoutTex()
@@ -514,5 +521,5 @@ endfunc
 command! SetLayoutTex call g:SetLayoutTex()
 
 " Set the layouts based on filetypes
-autocmd VimEnter *.py SetLayout01
-autocmd VimEnter *.tex SetLayoutTex
+" autocmd VimEnter *.py SetLayout02
+"autocmd VimEnter *.tex SetLayoutTex

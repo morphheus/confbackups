@@ -127,6 +127,7 @@ export VISUAL=nvim
 
 # FZF stuff
 export FZF_DEFAULT_OPTS='-m --height 20 --color=bg+:236,hl+:51,hl:51 --bind=ctrl-j:down,ctrl-k:up'
+source /usr/share/fzf/completion.bash
 
 fe() {
     # fe - Open the selected files with the default editor
