@@ -6,8 +6,8 @@ alias vim=nvim
 alias suvim="sudo -E nvim"
 alias vimrc="nvim ~/.config/nvim/init.vim"
 alias pls='sudo $(history -p !!)'
-#alias wcpython="wcmd c:/Python27/python.exe -u"
 #alias wcpip="wcmd C:/Python27/Scripts/pip.exe"
+alias wcpython='VBoxManage guestcontrol Windows10 --username david.tetreault.laroche@introspect.ca --password war4ever run --wait-stdout "C:/Python27/python.exe" -- '
 
 alias pyprof='python -m cProfile -o out.cprof'
 alias pyprof_svttest="python -m cProfile -o out.cprof '$run_svttest_file'"

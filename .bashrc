@@ -40,6 +40,9 @@ case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
 
+# Block dotnet crap
+DOTNET_CLI_TELEMETRY_OUTOUT=1
+
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
@@ -160,3 +163,9 @@ fkill() {
 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+PATH="/home/dave/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/dave/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/dave/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/dave/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/dave/perl5"; export PERL_MM_OPT;

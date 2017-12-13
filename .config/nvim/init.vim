@@ -1,5 +1,6 @@
 scriptencoding utf-8
 
+
 set encoding=utf-8
 
 colorscheme sweylaPy
@@ -42,6 +43,7 @@ set splitbelow
 set splitright
 set errorformat=%f:%l:\ %m
 set shortmess+=ca
+set fillchars+=vert:│
 
 "################
 " BINDINGS
@@ -49,7 +51,7 @@ set shortmess+=ca
 
 let mapleader = " "
 let tm=200
-
+    
 " clear highlights
 nnoremap <C-u> :noh<CR>
 
@@ -261,6 +263,8 @@ Plugin 'sbdchd/neoformat'
 Plugin 'vim-scripts/vim-indent-object'
 Plugin 'lervag/vimtex'
 
+Plugin 'djoshea/vim-autoread'
+
 Plugin 'mhinz/vim-signify'
 Plugin 'juneedahamed/vc.vim'
 
@@ -286,8 +290,19 @@ let g:airline#extensions#default#section_truncate_width = {
       \ 'z': 45,
       \ }
 
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
 
 function! AirlineInit()
 	let g:airline_section_x = airline#section#create_right(['tagbar'])
@@ -375,10 +390,18 @@ let g:jedi#force_py_version = 2
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#show_call_signatures = 0
-"let g:jedi#show_call_signatures_delay = 0
+let g:jedi#show_call_signatures_delay = 0
 let g:jedi#documentation_command = "<leader>i"
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#max_doc_height = 15
+
+"augroup jedi_call_signatures
+"autocmd! * <buffer>
+"
+"autocmd InsertEnter <buffer> let s:show_call_signatures_last = [0, 0, '']
+"autocmd InsertLeave <buffer> call g:jedi#clear_call_signatures()
+"inoremap <C-space> <C-o>:call g:jedi#show_call_signatures()<cr>
+
 
 " -------------------
 " vim-signify
@@ -437,13 +460,13 @@ nnoremap <silent> <leader>T :Tags<cr>
 nnoremap <silent> <leader>e :FLines<cr>
 
 " status line options
-function! s:fzf_statusline()
-  highlight fzf1 ctermfg=46  ctermbg=234
-  highlight fzf2 ctermfg=46  ctermbg=234
-  highlight fzf3 ctermfg=46  ctermbg=234
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
+"function! s:fzf_statusline()
+"  highlight fzf1 ctermfg=46  ctermbg=234
+"  highlight fzf2 ctermfg=46  ctermbg=234
+"  highlight fzf3 ctermfg=46  ctermbg=234
+"  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+"endfunction
+"autocmd! User FzfStatusLine call <SID>fzf_statusline()
 
 "################
 " MISC
@@ -460,7 +483,7 @@ fu! CustomFoldText()
 	endwhile
 	if fs > v:foldend
 	    let line = getline(v:foldstart)
-	else
+    else
 	    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
 	endif
 	
@@ -486,8 +509,7 @@ set grepprg=grep\ -nH\ $*
 let g:tex_flavor = "latex"
 
 " always show the sign columns
-autocmd BufEnter *.py sign define dummy
-autocmd BufEnter *.py execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+autocmd BufRead, BufNewFile *.py setlocal signcolumn=yes
 
 
 " 1 main block, one terminal, one small window above the terminal
