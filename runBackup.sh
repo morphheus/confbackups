@@ -1,4 +1,4 @@
-cd ~/confbackups
+cd ~/github/confbackups
 
 
 # FOLDERS BACKUP - must provide path from ~
