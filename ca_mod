@@ -189,11 +189,11 @@ xkb_symbols "multi" {
     key <AD09>	{ [         o,          O ]	};
     key <AD10>	{ [         p,          P ]	};
     key <AD11>	{ [dead_circumflex, dead_diaeresis, asciitilde   ]	};
-    key <AD12>	{ [ parenleft, braceleft ,bracketleft   ]	};
+    key <AD12>	{ [ parenleft, bracketleft ,braceleft   ]	};
 
     key <AC10>	{ [ semicolon,      colon,     ccedilla,   Ccedilla ]	};
     key <AC11>	{ [    egrave,     Egrave,  dead_grave]	};
-    key <BKSL>	{ [    parenright, braceright,bracketright ]	};
+    key <BKSL>	{ [    parenright, bracketright,braceright ]	};
 
     key <LSGT>	{ [    agrave, Agrave ,ugrave,     Ugrave ] 	};
     key <AB01>	{ [         z,          Z, guillemotleft  ]	};
