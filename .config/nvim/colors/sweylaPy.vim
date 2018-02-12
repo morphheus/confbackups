@@ -23,6 +23,7 @@ hi PmenuSel       guifg=#00FF00 guibg=#B3A9BD ctermfg=255 ctermbg=249
 "
 " Background and menu colors
 hi Cursor        guifg=#000000 guibg=#A0A0A0 ctermbg=250 gui=none
+hi CursorLine    guifg=#000000 guibg=#A0A0A0 ctermbg=233 gui=none
 hi iCursor       guifg=#000000 guibg=#00FF00 ctermbg=250 gui=none
 hi Normal        guifg=#00FF00 guibg=#000000 gui=none ctermfg=46  ctermbg=NONE   cterm=none
 hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=245  ctermbg=NONE   cterm=none

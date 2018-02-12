@@ -44,6 +44,10 @@ set splitright
 set errorformat=%f:%l:\ %m
 set shortmess+=ca
 set fillchars+=vert:│
+set cursorline
+
+" Neovim options
+set icm=nosplit
 
 "################
 " BINDINGS
@@ -293,7 +297,7 @@ let g:airline#extensions#default#section_truncate_width = {
 
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
+let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 if !exists('g:airline_symbols')
@@ -355,17 +359,14 @@ autocmd! BufWritePost * Neomake
 let g:neomake_highlight_columns=3
 
 
-function PostprocessPylintMaker(entry)
-endfunction
-
 let g:neomake_python_pylint_maker = {
         \ 'exe':'python2',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
             \ '--msg-template="{path}:{line}:{column}: [{msg_id} {symbol}] {msg} "',
-            \ '--rcfile=~/Documents/SvtPython/pylintrc.txt',
-            \ '--reports=no'
+            \ '--rcfile=~/Documents/trunk/SvtPython/pylintrc.txt',
+            \ '--reports=no',
         \ ],
         \ 'errorformat':
             \ '%A%f:%l:%c: %m,' .
@@ -373,13 +374,14 @@ let g:neomake_python_pylint_maker = {
             \ '%A%f:(%l): %m,' .
             \ '%-Z%p^%.%#,' .
             \ '%-G%.%#',
-        \ 'output_stream': 'stdout',
-        \ 'postprocess': [
-        \   function('neomake#postprocess#GenericLengthPostprocess'),
-        \   function('neomake#makers#ft#python#PylintEntryProcess'),
-        \   function('PostprocessPylintMaker'),
-        \ ]}
+        \ }
 let g:neomake_python_enabled_makers = ['pylint']
+
+
+hi NeomakeError     cterm=underline ctermfg=15 ctermbg=124
+hi NeomakeWarning   cterm=underline ctermfg=15 ctermbg=124
+hi NeomakeInfo      cterm=underline ctermfg=15 ctermbg=124
+hi NeomakeMessage   cterm=underline ctermfg=15 ctermbg=124
 
 " -------------------
 " Jedi stuff
@@ -545,3 +547,4 @@ command! SetLayoutTex call g:SetLayoutTex()
 " Set the layouts based on filetypes
 " autocmd VimEnter *.py SetLayout02
 "autocmd VimEnter *.tex SetLayoutTex
+"
