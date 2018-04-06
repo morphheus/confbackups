@@ -425,7 +425,7 @@ noremap <silent> gd :tab split<cr>:VCDiff<cr>
 
 "---------------------
 " neoterm
-let g:neoterm_position="vertical"
+let g:neoterm_default_mod = 'vertical'
 
 " Neoterm mappings
 nnoremap <F1> <ESC>:wa!<cr>
@@ -517,27 +517,26 @@ autocmd BufRead, BufNewFile *.py setlocal signcolumn=yes
 " 1 main block, one terminal, one small window above the terminal
 function! g:SetLayout00()
   set colorcolumn=80
-  execute "normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>:split\<cr>\<C-w>\<C-k>\<Esc>:resize 25\<cr>\<Esc>:b1\<cr>\<C-w>\<C-h>"
+  execute "normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>:split\<cr>\<C-w>\<C-k>\<Esc>:resize 25\<cr>\<Esc>:b1\<cr>\<C-w>\<C-h>"
 endfunc
 command! SL0 call g:SetLayout00()
 
 " nice "ide" layouy. Same as 00, but without the small window
 function! g:SetLayout01()
   set colorcolumn=80
-  execute "silent normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>"
+  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>"
 endfunc
 command! SL1 call g:SetLayout01()
 
 " Same as 01, but the main window has 2 splits
 function! g:SetLayout02()
   set colorcolumn=80
-  execute "silent normal! :Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"
+  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"
 endfunc
 command! SL2 call g:SetLayout02()
 
 " latexlayout
 function! g:SetLayoutTex()
-  let g:neoterm_position="horizontal"
   let @m="latexmk -pdf -pvc -interaction=nonstopmode -view=none\<cr>"
   set cole=0
   execute "normal! :autocmd! BufWinEnter,WinEnter term://*\<cr>:Tnew\<cr>\<C-w>\<C-j>:resize 15\<cr>\"mp\<C-w>\<C-k>"
