@@ -66,8 +66,6 @@ hi pythonBuiltin guifg=#00d7ff gui=none ctermfg=45 cterm=none
 hi ColorColumn ctermbg=234
 
 hi SignColumn  cterm=bold ctermfg=255 ctermbg=NONE
-autocmd VimEnter * hi NeomakeWarningDefault  ctermfg=255  ctermbg=52   cterm=none
-autocmd VimEnter * hi NeomakeMessageSignDefault  ctermfg=255  ctermbg=NONE   cterm=bold
-autocmd VimEnter * hi NeomakeWarningSignDefault  ctermfg=46   ctermbg=NONE   cterm=bold
-autocmd VimEnter * hi NeomakeErrorSignDefault    ctermfg=196  ctermbg=NONE   cterm=bold
-
+autocmd VimEnter * hi NeomakeMessageSign  ctermfg=255  ctermbg=NONE   cterm=bold
+autocmd VimEnter * hi NeomakeWarningSign  ctermfg=226   ctermbg=NONE   cterm=bold
+autocmd VimEnter * hi NeomakeErrorSign    ctermfg=196  ctermbg=NONE   cterm=bold

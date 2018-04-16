@@ -377,7 +377,6 @@ let g:neomake_python_pylint_maker = {
         \ }
 let g:neomake_python_enabled_makers = ['pylint']
 
-
 hi NeomakeError     cterm=underline ctermfg=15 ctermbg=124
 hi NeomakeWarning   cterm=underline ctermfg=15 ctermbg=124
 hi NeomakeInfo      cterm=underline ctermfg=15 ctermbg=124
