@@ -357,25 +357,39 @@ let g:cm_complete_popup_delay = 100
 
 autocmd! BufWritePost * Neomake
 let g:neomake_highlight_columns=3
+let g:neomake_error_sign = {'text': '🢂', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_warning_sign = {'text': '🡲','texthl': 'NeomakeWarningSign'}
+let g:neomake_message_sign = {'text': '🡲','texthl': 'NeomakeMessageSign'}
 
+"let g:neomake_error_sign = {'text': '->', 'texthl': 'NeomakeErrorSign'}
+"let g:neomake_warning_sign = {'text': '->','texthl': 'NeomakeWarningSign'}
+"let g:neomake_message_sign = {'text': '->','texthl': 'NeomakeMessageSign'}
 
 let g:neomake_python_pylint_maker = {
         \ 'exe':'python2',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
-            \ '--msg-template="{path}:{line}:{column}: [{msg_id} {symbol}] {msg} "',
+            \ '--msg-template="{path}:{line}:{column}:{C}: [{msg_id} {symbol}] {msg}"',
             \ '--rcfile=~/Documents/trunk/SvtPython/pylintrc.txt',
-            \ '--reports=no',
+            \ '--reports=no'
         \ ],
         \ 'errorformat':
-            \ '%A%f:%l:%c: %m,' .
+            \ '%A%f:%l:%c:%t: %m,' .
             \ '%A%f:%l: %m,' .
             \ '%A%f:(%l): %m,' .
             \ '%-Z%p^%.%#,' .
             \ '%-G%.%#',
-        \ }
+        \ 'output_stream': 'stdout',
+        \ 'postprocess': [
+        \   function('neomake#postprocess#generic_length'),
+        \   function('neomake#makers#ft#python#PylintEntryProcess'),
+\ ]}
 let g:neomake_python_enabled_makers = ['pylint']
+
+hi NeomakeMessageSign  ctermfg=255  ctermbg=None   cterm=bold
+hi NeomakeWarningSign  ctermfg=11  ctermbg=None   cterm=bold
+hi NeomakeErrorSign    ctermfg=9  ctermbg=None   cterm=bold
 
 hi NeomakeError     cterm=underline ctermfg=15 ctermbg=124
 hi NeomakeWarning   cterm=underline ctermfg=15 ctermbg=124
