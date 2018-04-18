@@ -56,6 +56,9 @@ set icm=nosplit
 let mapleader = " "
 let tm=200
     
+" open vimrc
+command! Vimrc e ~/.config/nvim/init.vim
+
 " clear highlights
 nnoremap <C-u> :noh<CR>
 
@@ -184,48 +187,39 @@ function! LocListToggle()
     if g:loclist_is_open
         lclose
         let g:loclist_is_open = 0
-    elseif g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
     else
+        let g:loclist_is_open = 1
         let g:loclist_return_to_window = winnr()
         lopen 8
         execute g:loclist_return_to_window . "wincmd w"
-        let g:loclist_is_open = 1
-
-        nnoremap <silent> <leader><Space> :ll<cr>
-        nnoremap <silent> <leader>n :lnext<cr>
-        nnoremap <silent> <leader>N :lprev<cr>
     endif
 endfunction
 
 function! QuickfixToggle()
-    if g:loclist_is_open
-        lclose
-        let g:loclist_is_open = 0
-    elseif g:quickfix_is_open
+    if g:quickfix_is_open
         cclose
         let g:quickfix_is_open = 0
     else
+        let g:quickfix_is_open = 1
         let g:quickfix_return_to_window = winnr()
         botright copen 7
         " Global bottom window for quickfix
         execute g:quickfix_return_to_window . "wincmd w"
-        let g:quickfix_is_open = 1
-
-        nnoremap <silent> <leader><Space> :cc<cr>
-        nnoremap <silent> <leader>n :cnext<cr>
-        nnoremap <silent> <leader>N :cprev<cr>
     endif
 endfunction
 
+autocmd BufWinEnter quickfix let g:quickfix_is_open = 1
+
 nnoremap <silent> <leader>a :call LocListToggle()<cr>
-nnoremap <silent> <leader>A :call QuickfixToggle()<cr>
+nnoremap <silent> <leader><Tab> :call QuickfixToggle()<cr>
 
 " Default to loclist bindings
 nnoremap <silent> <leader><Space> :ll<cr>
 nnoremap <silent> <leader>n :lnext<cr>
 nnoremap <silent> <leader>N :lprev<cr>
+
+nnoremap <silent> <Tab> :cnext<cr>
+nnoremap <silent> <S-Tab> :cprev<cr>
 
 
 "################
@@ -360,6 +354,7 @@ let g:neomake_highlight_columns=3
 let g:neomake_error_sign = {'text': '🢂', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '🡲','texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '🡲','texthl': 'NeomakeMessageSign'}
+let g:neomake_info_sign = {'text': '🡲','texthl': 'NeomakeInfoSign'}
 
 "let g:neomake_error_sign = {'text': '->', 'texthl': 'NeomakeErrorSign'}
 "let g:neomake_warning_sign = {'text': '->','texthl': 'NeomakeWarningSign'}
@@ -385,9 +380,17 @@ let g:neomake_python_pylint_maker = {
         \   function('neomake#postprocess#generic_length'),
         \   function('neomake#makers#ft#python#PylintEntryProcess'),
 \ ]}
+function! g:neomake_python_pylint_maker.filter_output(lines, context) abort
+    if a:context.source ==# 'stderr'
+        call filter(a:lines, "v:val !=# 'No config file found, using default configuration' && v:val !~# '^Using config file '")
+    endif
+    call neomake#makers#ft#python#FilterPythonWarnings(a:lines, a:context)
+endfunction
+
 let g:neomake_python_enabled_makers = ['pylint']
 
 hi NeomakeMessageSign  ctermfg=255  ctermbg=None   cterm=bold
+hi NeomakeInfoSign  ctermfg=255  ctermbg=None   cterm=bold
 hi NeomakeWarningSign  ctermfg=11  ctermbg=None   cterm=bold
 hi NeomakeErrorSign    ctermfg=9  ctermbg=None   cterm=bold
 
@@ -473,6 +476,21 @@ nnoremap <silent> <leader>\ :Lines<cr>
 nnoremap <silent> <leader>t :BTags<cr>
 nnoremap <silent> <leader>T :Tags<cr>
 nnoremap <silent> <leader>e :FLines<cr>
+
+"function! Fzf_build_quickfix_list(lines)
+"    let! g:tempVal = copy(a:lines)
+"    call setqflist(a:lines)
+"    "call setqflist(map(copy(a:lines), '{ "filename": v:val.path, "lnum":20 }'))
+"    botright copen 20
+"    cc
+"endfunction
+
+  "\ 'ctrl-q': function('Fzf_build_quickfix_list'),
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
 
 " status line options
 "function! s:fzf_statusline()
