@@ -15,7 +15,6 @@ set t_Co=256
 let colors_name = "sweylaPy"
 
 
-hi CursorLine     cterm=none ctermbg=235
 hi CursorColumn   guibg=#000000 ctermbg=16
 hi MatchParen     guifg=#191919 guibg=#00d700 gui=bold ctermfg=255 ctermbg=27 cterm=bold
 hi Pmenu          guifg=#00FF00 guibg=#323232 ctermfg=255 ctermbg=236
@@ -23,7 +22,7 @@ hi PmenuSel       guifg=#00FF00 guibg=#B3A9BD ctermfg=255 ctermbg=249
 "
 " Background and menu colors
 hi Cursor        guifg=#000000 guibg=#A0A0A0 ctermbg=250 gui=none
-hi CursorLine    guifg=#000000 guibg=#A0A0A0 ctermbg=233 gui=none
+hi CursorLine    guifg=#000000 guibg=#A0A0A0 ctermbg=235 gui=none cterm=none
 hi iCursor       guifg=#000000 guibg=#00FF00 ctermbg=250 gui=none
 hi Normal        guifg=#00FF00 guibg=#000000 gui=none ctermfg=46  ctermbg=NONE   cterm=none
 hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=245  ctermbg=NONE   cterm=none
