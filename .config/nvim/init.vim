@@ -348,8 +348,18 @@ let g:cm_complete_popup_delay = 100
 
 " -------------------
 " neomake
+function! SaveAllAndRunNeomake()
+    wa!
+    Neomake
+endfunc
 
-autocmd! BufWritePost * Neomake
+nnoremap <silent> <F1> <ESC>:call SaveAllAndRunNeomake()<cr>
+inoremap <silent> <F1> <ESC>:call SaveAllAndRunNeomake()<cr>
+
+"nnoremap <F1> <ESC>:wa!<cr>
+"inoremap <F1> <ESC>:wa!<cr>
+autocmd! CursorHold * Neomake
+autocmd! CursorHoldI * Neomake
 let g:neomake_highlight_columns=3
 let g:neomake_error_sign = {'text': '🢂', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '🡲','texthl': 'NeomakeWarningSign'}
@@ -444,8 +454,6 @@ noremap <silent> gd :tab split<cr>:VCDiff<cr>
 let g:neoterm_default_mod = 'vertical'
 
 " Neoterm mappings
-nnoremap <F1> <ESC>:wa!<cr>
-inoremap <F1> <ESC>:wa!<cr>
 let g:neoterm_automap_keys = "<F2>"
 nnoremap <expr> <F3> ":Tmap " . input("Command? "). "\<Enter>"
 nnoremap <F4> :T <up>
