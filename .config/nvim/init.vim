@@ -42,6 +42,7 @@ set timeoutlen=500
 set splitbelow
 set splitright
 set errorformat=%f:%l:\ %m
+set errorformat+=%f:%l
 set shortmess+=ca
 set fillchars+=vert:│
 set cursorline
@@ -276,7 +277,8 @@ nnoremap <silent> <F5> :TagbarToggle<CR>
 
 " -------------------
 " Airline theme
-let g:airline_theme='jellybeans'
+"let g:airline_theme='jellybeans_custom'
+let g:airline_theme='jellybeans_custom'
 let g:airline#extensions#disable_rtp_load = 1
 "let g:airline_extensions = ['tagbar']
 let g:airline#extensions#default#layout = [
@@ -301,6 +303,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
+let g:airline#extensions#tagbar#flags = 'f' 
 
 function! AirlineInit()
 	let g:airline_section_x = airline#section#create_right(['tagbar'])
@@ -563,7 +566,7 @@ command! SL0 call g:SetLayout00()
 " nice "ide" layouy. Same as 00, but without the small window
 function! g:SetLayout01()
   set colorcolumn=80
-  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>"
+  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 80\<cr>\<C-w>\<C-h>\<Esc>"
 endfunc
 command! SL1 call g:SetLayout01()
 
