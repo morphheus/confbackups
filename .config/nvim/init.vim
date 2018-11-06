@@ -253,7 +253,17 @@ Plugin 'ervandew/supertab'
 
 "Plugin 'zchee/deoplete-jedi'
 "Plugin 'Shougo/deoplete.nvim'
-Plugin 'roxma/nvim-completion-manager'
+Plugin 'roxma/nvim-yarp'
+Plugin 'ncm2/ncm2'
+Plugin 'ncm2/ncm2-bufword'
+Plugin 'ncm2/ncm2-path'
+Plugin 'ncm2/ncm2-tagprefix'
+Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
+Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
+Plugin 'ncm2/ncm2-jedi'
+Plugin 'ncm2/ncm2-pyclang'
+Plugin 'ncm2/ncm2-vim'
+
 
 Plugin 'kassio/neoterm'
 Plugin 'neomake/neomake'
@@ -346,8 +356,11 @@ let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 "let g:deoplete#tag#cache_limit_size = 5000000
 "
 " -------------------
-" nvim-completion-manager
-let g:cm_complete_popup_delay = 100
+" ncm2
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+let g:ncm2#popup_delay = 100
+set completeopt=noinsert,menuone,noselect
 
 " -------------------
 " neomake
@@ -374,7 +387,7 @@ let g:neomake_info_sign = {'text': '🡲','texthl': 'NeomakeInfoSign'}
 "let g:neomake_message_sign = {'text': '->','texthl': 'NeomakeMessageSign'}
 
 let g:neomake_python_pylint_maker = {
-        \ 'exe':'python2',
+        \ 'exe':'python3.6',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
@@ -475,9 +488,9 @@ autocmd FileType fzf tnoremap <buffer> <C-k> <up>
 autocmd FileType fzf tnoremap <buffer> <C-space> <enter>
 
 command! -bang FLines call fzf#vim#grep(
-    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --exclude=tags --exclude=*\.js --exclude=*\.pyc --exclude=*\.npy  --exclude=*\.pickle --exclude=*\.exe --exclude=*\.dll --exclude=*\.gitignore --exclude=generateSvtDocs_log.txt --exclude=*\.zip --exclude=*\.gz "^$"',
-    \ 0, 
-    \ {'options': '--reverse --prompt "FLines> "'})
+    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --exclude=tags --exclude=*\.js --exclude=*\.pyc --exclude=*\.npy  --exclude=*\.pickle --exclude=*\.exe --exclude=*\.dll --exclude=*\.o --exclude=*\.gitignore --exclude=generateSvtDocs_log.txt --exclude=*\.zip --exclude=*\.gz "^$"',
+   \ 0, 
+   \ {'options': '--reverse --prompt "FLines> " --color hl:45,hl+:51 '})
 
 " fzf windows maps
 nnoremap <silent> <leader>q :Buffers<cr>
