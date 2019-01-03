@@ -387,7 +387,7 @@ let g:neomake_info_sign = {'text': '🡲','texthl': 'NeomakeInfoSign'}
 "let g:neomake_message_sign = {'text': '->','texthl': 'NeomakeMessageSign'}
 
 let g:neomake_python_pylint_maker = {
-        \ 'exe':'python3.6',
+        \ 'exe':'python3',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
