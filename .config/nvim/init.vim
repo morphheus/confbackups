@@ -501,18 +501,18 @@ nnoremap <silent> <leader>t :BTags<cr>
 nnoremap <silent> <leader>T :Tags<cr>
 nnoremap <silent> <leader>e :FLines<cr>
 
-"function! Fzf_build_quickfix_list(lines)
-"    let! g:tempVal = copy(a:lines)
-"    call setqflist(a:lines)
-"    "call setqflist(map(copy(a:lines), '{ "filename": v:val.path, "lnum":20 }'))
-"    botright copen 20
-"    cc
-"endfunction
+function! Fzf_build_quickfix_list(lines)
+    let! g:tempVal = copy(a:lines)
+    call setqflist(a:lines)
+    "call setqflist(map(copy(a:lines), '{ "filename": v:val.path, "lnum":20 }'))
+    botright copen 20
+    cc
+endfunction
 
-  "\ 'ctrl-q': function('Fzf_build_quickfix_list'),
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
+  \ 'ctrl-q': function('Fzf_build_quickfix_list'),
   \ 'ctrl-v': 'vsplit' }
 
 
