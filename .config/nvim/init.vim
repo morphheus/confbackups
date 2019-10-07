@@ -70,11 +70,11 @@ noremap <leader>P "+P
 noremap <leader>y "+y
 noremap <leader>Y "+Y
 
-" remap ; to : because fuck shift
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+"" remap ; to : because fuck shift
+"nnoremap ; :
+"nnoremap : ;
+"vnoremap ; :
+"vnoremap : ;
 
 " Remap home/pagedown.
 noremap H g<HOME>
@@ -222,6 +222,9 @@ nnoremap <silent> <leader>N :lprev<cr>
 nnoremap <silent> <Tab> :cnext<cr>
 nnoremap <silent> <S-Tab> :cprev<cr>
 
+" File type assignement
+autocmd BufRead,BufNewFile *.pyx setl ft=cython 
+
 
 "################
 " PLUGINS
@@ -276,6 +279,8 @@ Plugin 'djoshea/vim-autoread'
 
 Plugin 'mhinz/vim-signify'
 Plugin 'juneedahamed/vc.vim'
+
+Plugin 'lambdalisue/vim-cython-syntax'
 
 call vundle#end()
 
@@ -366,7 +371,7 @@ set completeopt=noinsert,menuone,noselect
 " neomake
 function! SaveAllAndRunNeomake()
     wa!
-    Neomake
+    silent Neomake
 endfunc
 
 nnoremap <silent> <F1> <ESC>:call SaveAllAndRunNeomake()<cr>
