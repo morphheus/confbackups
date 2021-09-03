@@ -46,9 +46,11 @@ set errorformat+=%f:%l
 set shortmess+=ca
 set fillchars+=vert:│
 set cursorline
+set scrolloff=8
 
 " Neovim options
 set icm=nosplit
+
 
 "################
 " BINDINGS
@@ -63,18 +65,16 @@ command! Vimrc e ~/.config/nvim/init.vim
 " clear highlights
 nnoremap <C-u> :noh<CR>
 
-" e from system clipboard easy. First change the killring to ctrlp
+" Search always center the buffer
+nnoremap n nzz
+nnoremap N Nzz
+
+" e from system clipboard easy.
 " Copy/Past
 noremap <leader>p "+p
 noremap <leader>P "+P
 noremap <leader>y "+y
 noremap <leader>Y "+Y
-
-"" remap ; to : because fuck shift
-"nnoremap ; :
-"nnoremap : ;
-"vnoremap ; :
-"vnoremap : ;
 
 " Remap home/pagedown.
 noremap H g<HOME>
@@ -193,6 +193,7 @@ function! LocListToggle()
         let g:loclist_return_to_window = winnr()
         lopen 8
         execute g:loclist_return_to_window . "wincmd w"
+
     endif
 endfunction
 
@@ -200,9 +201,11 @@ function! QuickfixToggle()
     if g:quickfix_is_open
         cclose
         let g:quickfix_is_open = 0
+
     else
         let g:quickfix_is_open = 1
         let g:quickfix_return_to_window = winnr()
+
         botright copen 7
         " Global bottom window for quickfix
         execute g:quickfix_return_to_window . "wincmd w"
@@ -213,14 +216,13 @@ autocmd BufWinEnter quickfix let g:quickfix_is_open = 1
 
 nnoremap <silent> <leader>a :call LocListToggle()<cr>
 nnoremap <silent> <leader><Tab> :call QuickfixToggle()<cr>
+"
+nnoremap <silent> <Tab> :lnext<cr>
+nnoremap <silent> <S-Tab> :lprev<cr>
 
-" Default to loclist bindings
-nnoremap <silent> <leader><Space> :ll<cr>
-nnoremap <silent> <leader>n :lnext<cr>
-nnoremap <silent> <leader>N :lprev<cr>
+nnoremap <silent> <leader>n :cnext<cr>
+nnoremap <silent> <leader>N :cprev<cr>
 
-nnoremap <silent> <Tab> :cnext<cr>
-nnoremap <silent> <S-Tab> :cprev<cr>
 
 " File type assignement
 autocmd BufRead,BufNewFile *.pyx setl ft=cython 
@@ -242,7 +244,7 @@ Plugin 'Konfekt/FastFold'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-Plugin 'ludovicchabant/vim-gutentags'
+"Plugin 'ludovicchabant/vim-gutentags'
 
 Plugin 'majutsushi/tagbar'
 
@@ -260,13 +262,12 @@ Plugin 'roxma/nvim-yarp'
 Plugin 'ncm2/ncm2'
 Plugin 'ncm2/ncm2-bufword'
 Plugin 'ncm2/ncm2-path'
-Plugin 'ncm2/ncm2-tagprefix'
+"Plugin 'ncm2/ncm2-tagprefix'
 Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
 Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
 Plugin 'ncm2/ncm2-jedi'
 Plugin 'ncm2/ncm2-pyclang'
-Plugin 'ncm2/ncm2-vim'
-
+Plugin 'ncm2/ncm2-vim' | Plugin 'Shougo/neco-vim'
 
 Plugin 'kassio/neoterm'
 Plugin 'neomake/neomake'
@@ -281,6 +282,7 @@ Plugin 'mhinz/vim-signify'
 Plugin 'juneedahamed/vc.vim'
 
 Plugin 'lambdalisue/vim-cython-syntax'
+Plugin 'machakann/vim-highlightedyank'
 
 call vundle#end()
 
@@ -298,7 +300,7 @@ let g:airline#extensions#disable_rtp_load = 1
 "let g:airline_extensions = ['tagbar']
 let g:airline#extensions#default#layout = [
       \ [ 'a', 'c' ],
-      \ [ 'x', 'z'],
+      \ [ 'x', 'z', 'warning'],
       \ ]
 let g:airline#extensions#default#section_truncate_width = {
       \ 'x': 80,
@@ -319,10 +321,13 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline#extensions#tagbar#flags = 'f' 
+let g:airline#extensions#neomake#enabled = 1
 
 function! AirlineInit()
 	let g:airline_section_x = airline#section#create_right(['tagbar'])
 	let g:airline_section_z = "%l/%L:%v"
+	let g:airline_section_warning = "%{neomake#statusline#LoclistStatus('')}"
+
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
 
@@ -365,6 +370,7 @@ let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 autocmd BufEnter * call ncm2#enable_for_buffer()
 
 let g:ncm2#popup_delay = 100
+let g:ncm2#popup_limit = 5
 set completeopt=noinsert,menuone,noselect
 
 " -------------------
@@ -392,7 +398,7 @@ let g:neomake_info_sign = {'text': '🡲','texthl': 'NeomakeInfoSign'}
 "let g:neomake_message_sign = {'text': '->','texthl': 'NeomakeMessageSign'}
 
 let g:neomake_python_pylint_maker = {
-        \ 'exe':'python3',
+        \ 'exe':'python3.7',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
@@ -435,7 +441,7 @@ hi NeomakeMessage   cterm=underline ctermfg=15 ctermbg=124
 autocmd BufWinEnter '__doc__' setlocal bufhidden=delete
 autocmd BufLeave '__doc__' q
 autocmd FileType python setlocal completeopt-=preview
-let g:jedi#force_py_version = 2
+let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_assignments_command = "<leader>g"
 let g:jedi#show_call_signatures = 0
@@ -510,8 +516,10 @@ function! Fzf_build_quickfix_list(lines)
     let! g:tempVal = copy(a:lines)
     call setqflist(a:lines)
     "call setqflist(map(copy(a:lines), '{ "filename": v:val.path, "lnum":20 }'))
-    botright copen 20
     cc
+    "
+    " Have to wait for fzf to close for botright copen to work properly
+    timer_start(50, QuickfixToggle) 
 endfunction
 
 let g:fzf_action = {
@@ -529,6 +537,14 @@ let g:fzf_action = {
 "  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 "endfunction
 "autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+"---------------------
+"vim-highlightedyank
+
+
+let g:highlightedyank_highlight_duration = 250
+
+hi HighlightedyankRegion ctermfg=none ctermbg=243 gui=reverse
 
 "################
 " MISC
@@ -560,7 +576,7 @@ fu! CustomFoldText()
 endf
 set foldtext=CustomFoldText()
 
-set foldmethod=indent foldlevel=1 foldnestmax=2
+set foldmethod=indent foldlevel=1 foldnestmax=3
 "autocmd BufRead * :if line('$') > 1000 | set foldmethod=indent foldlevel=1 foldnestmax=2 | endif
 "autocmd BufEnter * :if line('$') > 1000 | set foldmethod=indent | endif
 "autocmd BufWinEnter * set nofoldenable
@@ -573,6 +589,10 @@ let g:tex_flavor = "latex"
 " always show the sign columns
 autocmd BufRead, BufNewFile *.py setlocal signcolumn=yes
 
+
+"################
+" LAYOUTS
+"################
 
 " 1 main block, one terminal, one small window above the terminal
 function! g:SetLayout00()
@@ -599,11 +619,11 @@ command! SL2 call g:SetLayout02()
 function! g:SetLayoutTex()
   let @m="latexmk -pdf -pvc -interaction=nonstopmode -view=none\<cr>"
   set cole=0
-  execute "normal! :autocmd! BufWinEnter,WinEnter term://*\<cr>:Tnew\<cr>\<C-w>\<C-j>:resize 15\<cr>\"mp\<C-w>\<C-k>"
+  execute "normal! :autocmd! BufWinEnter,WinEnter term://*\<cr>:bel Tnew\<cr>\<C-w>\<C-j>:resize 15\<cr>\"mp\<C-w>\<C-k>"
 endfunc
 command! SetLayoutTex call g:SetLayoutTex()
 
 " Set the layouts based on filetypes
 " autocmd VimEnter *.py SetLayout02
-"autocmd VimEnter *.tex SetLayoutTex
+autocmd VimEnter *.tex SetLayoutTex
 "

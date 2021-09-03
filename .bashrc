@@ -60,9 +60,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -120,8 +120,6 @@ fi
 # Better colors 
 export PS1="\[\033[38;5;45m\][\t \W]\[$(tput sgr0)\] "
 export LS_COLORS="di=1;36:ln=1;35:so=33:pi=33:ex=1;93:bd=33:cd=33:su=33:sg=33:tw=1;36:ow=1;36"
-# Add SvtPython to pythonpath
-export PYTHONPATH="${PYTHONPATH}:/mnt/c/introspectDocs/SvtPython/"
 
 # Set nvim as default editor
 export EDITOR=nvim

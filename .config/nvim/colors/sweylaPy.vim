@@ -32,7 +32,7 @@ hi StatusLineNC  guifg=#005faf guibg=#262626 gui=none ctermfg=25 ctermbg=234 cte
 hi VertSplit     guifg=#00d7d7 guibg=#191919 gui=none ctermfg=44 ctermbg=234 cterm=none
 hi Folded        guifg=#00d7af guibg=#000000 gui=none ctermfg=45 ctermbg=NONE  cterm=bold
 hi Title         guifg=#B3A9BD guibg=NONE	gui=bold ctermfg=249 ctermbg=NONE cterm=bold
-hi Visual        guifg=#00d7d7 guibg=#4e4e4e gui=none ctermfg=44 ctermbg=239 cterm=none
+hi Visual        guifg=NONE guibg=#4e4e4e gui=none ctermfg=NONE ctermbg=237 cterm=none
 hi SpecialKey    guifg=#7AB96B guibg=#0F0F0F gui=none ctermfg=107 ctermbg=233 cterm=none
 "hi DiffChange    guibg=#4C4C00 gui=none ctermbg=58 cterm=none
 "hi DiffAdd       guibg=#25254C gui=none ctermbg=235 cterm=none
@@ -65,3 +65,5 @@ hi pythonBuiltin guifg=#00d7ff gui=none ctermfg=45 cterm=none
 hi ColorColumn ctermbg=234
 
 hi SignColumn  cterm=bold ctermfg=255 ctermbg=NONE
+
+
