@@ -216,12 +216,13 @@ autocmd BufWinEnter quickfix let g:quickfix_is_open = 1
 
 nnoremap <silent> <leader>a :call LocListToggle()<cr>
 nnoremap <silent> <leader><Tab> :call QuickfixToggle()<cr>
-"
-nnoremap <silent> <Tab> :lnext<cr>
-nnoremap <silent> <S-Tab> :lprev<cr>
 
-nnoremap <silent> <leader>n :cnext<cr>
-nnoremap <silent> <leader>N :cprev<cr>
+nnoremap <silent> <Tab> :cnext<cr>
+nnoremap <silent> <S-Tab> :cprev<cr>
+
+nnoremap <silent> <leader><leader> :ll<cr>
+nnoremap <silent> <C-n> :lnext<cr>
+nnoremap <silent> <M-n> :lprev<cr>
 
 
 " File type assignement
@@ -246,7 +247,7 @@ Plugin 'vim-airline/vim-airline-themes'
 
 "Plugin 'ludovicchabant/vim-gutentags'
 
-Plugin 'majutsushi/tagbar'
+"Plugin 'majutsushi/tagbar'
 
 Plugin 'scrooloose/nerdtree'
 
@@ -288,14 +289,14 @@ call vundle#end()
 
 " -------------------
 " Tagbar
-let g:tagbar_autofocus = 1
-let g:tagbar_left = 1
-nnoremap <silent> <F5> :TagbarToggle<CR>
+"let g:tagbar_autofocus = 1
+"let g:tagbar_left = 1
+"nnoremap <silent> <F5> :TagbarToggle<CR>
 
 " -------------------
 " Airline theme
-"let g:airline_theme='jellybeans_custom'
-let g:airline_theme='jellybeans_custom'
+let g:airline_theme='deus'
+"let g:airline_theme='jellybeans'
 let g:airline#extensions#disable_rtp_load = 1
 "let g:airline_extensions = ['tagbar']
 let g:airline#extensions#default#layout = [
@@ -307,11 +308,6 @@ let g:airline#extensions#default#section_truncate_width = {
       \ 'z': 45,
       \ }
 
-
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
