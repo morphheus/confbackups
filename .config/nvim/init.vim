@@ -52,18 +52,23 @@ set scrolloff=8
 set icm=nosplit
 
 
+
 "################
 " BINDINGS
 "################
 
 let mapleader = " "
 let tm=200
-    
+
 " open vimrc
 command! Vimrc e ~/.config/nvim/init.vim
 
 " clear highlights
 nnoremap <C-u> :noh<CR>
+
+" Tab to indent in visual mode
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " Search always center the buffer
 nnoremap n nzz
@@ -229,6 +234,8 @@ nnoremap <silent> <M-n> :lprev<cr>
 autocmd BufRead,BufNewFile *.pyx setl ft=cython 
 
 
+
+
 "################
 " PLUGINS
 "################
@@ -257,8 +264,8 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 
-"Plugin 'zchee/deoplete-jedi'
-"Plugin 'Shougo/deoplete.nvim'
+Plugin 'zchee/deoplete-jedi'
+Plugin 'Shougo/deoplete.nvim'
 Plugin 'roxma/nvim-yarp'
 Plugin 'ncm2/ncm2'
 Plugin 'ncm2/ncm2-bufword'
@@ -292,6 +299,7 @@ call vundle#end()
 "let g:tagbar_autofocus = 1
 "let g:tagbar_left = 1
 "nnoremap <silent> <F5> :TagbarToggle<CR>
+
 
 " -------------------
 " Airline theme
@@ -341,12 +349,13 @@ let NERDTreeMapJumpLastChild=''
 let NERDTreeMapJumpFirstChild=''
 let NERDTreeMapActivateNode='<Tab>'
 
+
 " -------------------
 " Raibbow paren
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 let g:rainbow_conf = {
     \     'ctermfgs': [ 'white', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
-    \     'operators': '_,\|+\|-\|*\|\/\|===\|!==_',
+    \     'operators': '_,\|+\|-\|*\|===\|!==_',
     \}
 
 " -------------------
@@ -378,6 +387,7 @@ endfunc
 
 nnoremap <silent> <F1> <ESC>:call SaveAllAndRunNeomake()<cr>
 inoremap <silent> <F1> <ESC>:call SaveAllAndRunNeomake()<cr>
+
 
 "nnoremap <F1> <ESC>:wa!<cr>
 "inoremap <F1> <ESC>:wa!<cr>
@@ -499,6 +509,11 @@ command! -bang FLines call fzf#vim#grep(
    \ 0, 
    \ {'options': '--reverse --prompt "FLines> " --color hl:45,hl+:51 '})
 
+command! -bang FPyLines call fzf#vim#grep(
+    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --include=*\.py --include=*\.pyx "^$"',
+   \ 0, 
+   \ {'options': '--reverse --prompt "FPyLines> " --color hl:45,hl+:51 '})
+
 " fzf windows maps
 nnoremap <silent> <leader>q :Buffers<cr>
 nnoremap <silent> <leader>w :Files<cr>
@@ -506,7 +521,8 @@ nnoremap <silent> <leader>/ :BLines<cr>
 nnoremap <silent> <leader>\ :Lines<cr>
 nnoremap <silent> <leader>t :BTags<cr>
 nnoremap <silent> <leader>T :Tags<cr>
-nnoremap <silent> <leader>e :FLines<cr>
+nnoremap <silent> <leader>e :FPyLines<cr>
+nnoremap <silent> <leader>E :FLines<cr>
 
 function! Fzf_build_quickfix_list(lines)
     let! g:tempVal = copy(a:lines)

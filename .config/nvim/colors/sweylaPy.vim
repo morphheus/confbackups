@@ -50,7 +50,7 @@ hi Search           cterm=bold ctermfg=250 ctermbg=19
 
 
 " Syntax highlighting
-hi Comment guifg=#00FFD7 gui=none ctermfg=50 cterm=none
+hi Comment guifg=#009999 gui=none ctermfg=246 cterm=none
 hi Constant guifg=#af5faf gui=none ctermfg=139 cterm=none
 hi Number guifg=#af5faf gui=none ctermfg=139 cterm=none
 hi Identifier guifg=#80479F gui=none ctermfg=97 cterm=none
