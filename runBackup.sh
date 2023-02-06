@@ -21,4 +21,5 @@ done
 echo Commiting tracked files to git
 git add -u
 git commit -m "Auto backup"
+git push
 
