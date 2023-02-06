@@ -1,6 +1,5 @@
 scriptencoding utf-8
 
-
 set encoding=utf-8
 
 colorscheme sweylaPy
@@ -510,7 +509,7 @@ command! -bang FLines call fzf#vim#grep(
    \ {'options': '--reverse --prompt "FLines> " --color hl:45,hl+:51 '})
 
 command! -bang FPyLines call fzf#vim#grep(
-    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --include=*\.py --include=*\.pyx "^$"',
+    \'grep -vnITr --color=always --exclude-dir=".git" --exclude-dir=".svn" --exclude-dir="env" --include=*\.py --include=*\.pyx --include=*\.csv "^$"',
    \ 0, 
    \ {'options': '--reverse --prompt "FPyLines> " --color hl:45,hl+:51 '})
 
