@@ -294,11 +294,12 @@ xkb_symbols "multix" {
 
     key.type[group1]="EIGHT_LEVEL_SEMIALPHABETIC";
     key <AB10> {[    eacute,     Eacute,     dead_acute, NoSymbol,       NoSymbol, dead_abovedot ]};
+    key <RCTL> {[ Control_R]};
+
 
     include "nbsp(level3)"
 
     include "level3(ralt_switch)"
-    include "level5(rctrl_switch)"
 };
 
 // OLPC Section

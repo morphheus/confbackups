@@ -21,9 +21,9 @@ hi Pmenu          guifg=#00FF00 guibg=#323232 ctermfg=255 ctermbg=236
 hi PmenuSel       guifg=#00FF00 guibg=#B3A9BD ctermfg=255 ctermbg=249
 "
 " Background and menu colors
-hi Cursor        guifg=#000000 guibg=#A0A0A0 ctermbg=250 gui=none
-hi CursorLine    guifg=#000000 guibg=#A0A0A0 ctermbg=235 gui=none cterm=none
-hi iCursor       guifg=#000000 guibg=#00FF00 ctermbg=250 gui=none
+hi Cursor        guifg=NONE guibg=#A0A0A0 ctermbg=250
+hi CursorLine    guifg=NONE guibg=#A0A0A0 ctermbg=235 cterm=none
+hi iCursor       guifg=NONE guibg=#00FF00 ctermbg=250 gui=none
 hi Normal        guifg=#00FF00 guibg=#000000 gui=none ctermfg=46  ctermbg=NONE   cterm=none
 hi NonText       guifg=#585858 guibg=#0F0F0F gui=none ctermfg=245  ctermbg=NONE   cterm=none
 hi LineNr        guifg=#585858 guibg=#000000 gui=none ctermfg=240 ctermbg=NONE   cterm=none
@@ -47,6 +47,9 @@ hi TabLineFill      guibg=#5E5E5E gui=none ctermbg=235 ctermfg=228 cterm=none
 hi TabLine          guifg=#FFB053 gui=bold ctermbg=233 ctermfg=243 cterm=bold
 hi TabLineSel       guifg=#FFB053 gui=bold ctermbg=238 ctermfg=34 cterm=bold
 hi Search           cterm=bold ctermfg=250 ctermbg=19
+hi jediFunction     guifg=NONE guibg=#A0A0A0 ctermbg=237 gui=none ctermfg=81   
+hi jediFat          guifg=NONE guibg=#A0A0A0 ctermbg=237 gui=none ctermfg=81   cterm=bold,underline
+
 
 
 " Syntax highlighting
@@ -62,6 +65,7 @@ hi Keyword guifg=#ffaf87 gui=none ctermfg=216 cterm=none
 hi String guifg=#00D787 gui=none ctermfg=42 cterm=none
 hi Type guifg=#00d7af gui=bold ctermfg=43 cterm=bold
 hi pythonBuiltin guifg=#00d7ff gui=none ctermfg=45 cterm=none
+hi pythonKeyword guifg=#00d7ff gui=none ctermfg=45 cterm=none
 hi ColorColumn ctermbg=234
 
 hi SignColumn  cterm=bold ctermfg=255 ctermbg=NONE

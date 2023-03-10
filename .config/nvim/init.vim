@@ -180,6 +180,14 @@ endfunc
 command! RelToggle call g:ToggleNuMode()
 noremap <F6> :RelToggle<cr>
 
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+map gm :call SynStack()<CR>
+
 " Location list/quickfix bindings. Can only have loclist or quickfix open at a
 " time, never both. Broken when switching windows and attempting to open a
 " new loclist there
@@ -266,15 +274,18 @@ Plugin 'ervandew/supertab'
 Plugin 'zchee/deoplete-jedi'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'roxma/nvim-yarp'
-Plugin 'ncm2/ncm2'
-Plugin 'ncm2/ncm2-bufword'
-Plugin 'ncm2/ncm2-path'
-"Plugin 'ncm2/ncm2-tagprefix'
-Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
-Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
-Plugin 'ncm2/ncm2-jedi'
-Plugin 'ncm2/ncm2-pyclang'
-Plugin 'ncm2/ncm2-vim' | Plugin 'Shougo/neco-vim'
+
+Plugin 'wookayin/semshi'
+
+"Plugin 'ncm2/ncm2'
+"Plugin 'ncm2/ncm2-bufword'
+"Plugin 'ncm2/ncm2-path'
+""Plugin 'ncm2/ncm2-tagprefix'
+"Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
+"Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
+"Plugin 'ncm2/ncm2-jedi'
+"Plugin 'ncm2/ncm2-pyclang'
+"Plugin 'ncm2/ncm2-vim' | Plugin 'Shougo/neco-vim'
 
 Plugin 'kassio/neoterm'
 Plugin 'neomake/neomake'
@@ -365,17 +376,40 @@ let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 " -------------------
 " deoplete
-"let g:deoplete#sources#jedi#show_docstring = 1
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#tag#cache_limit_size = 5000000
+let g:deoplete#sources#jedi#show_docstring = 1
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#tag#cache_limit_size = 5000000
+call deoplete#custom#option('auto_complete_delay', 100)
 "
 " -------------------
 " ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
+"autocmd BufEnter * call ncm2#enable_for_buffer()
+"
+"let g:ncm2#popup_delay = 100
+"let g:ncm2#popup_limit = 5
+"set completeopt=noinsert,menuone,noselect
 
-let g:ncm2#popup_delay = 100
-let g:ncm2#popup_limit = 5
-set completeopt=noinsert,menuone,noselect
+" -------------------
+" semshi
+
+"let g:semshi#excluded_hl_groups = ['local', 'free']
+function MyCustomHighlights()
+    hi semshiGlobal          ctermfg=178 
+    hi semshiImported        ctermfg=178 cterm=bold 
+    hi semshiFree            ctermfg=178 
+    hi semshiParameter       ctermfg=86  
+    hi semshiParameterUnused ctermfg=67 cterm=none
+    hi semshiBuiltin         ctermfg=45
+    hi semshiAttribute       ctermfg=253  
+    hi semshiSelf            ctermfg=249 
+    hi semshiUnresolved      ctermfg=226 cterm=underline 
+    hi semshiSelected        ctermfg=none ctermbg=NONE cterm=underline
+    hi semshiErrorSign       ctermfg=231 ctermbg=160 
+    hi semshiErrorChar       ctermfg=231 ctermbg=160 
+    sign define semshiError text=E> texthl=semshiErrorSign
+endfunction
+
+autocmd FileType python call MyCustomHighlights()
 
 " -------------------
 " neomake
@@ -449,7 +483,7 @@ autocmd FileType python setlocal completeopt-=preview
 let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#show_call_signatures = 0
+let g:jedi#show_call_signatures = 1
 let g:jedi#show_call_signatures_delay = 0
 let g:jedi#documentation_command = "<leader>i"
 let g:jedi#usages_command = "<leader>u"
