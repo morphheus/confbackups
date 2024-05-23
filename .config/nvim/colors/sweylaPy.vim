@@ -30,7 +30,7 @@ hi LineNr        guifg=#585858 guibg=#000000 gui=none ctermfg=240 ctermbg=NONE  
 hi StatusLine    guifg=#00d7ff guibg=#3a3a3a gui=none ctermfg=45 ctermbg=235  cterm=none
 hi StatusLineNC  guifg=#005faf guibg=#262626 gui=none ctermfg=25 ctermbg=234 cterm=none
 hi VertSplit     guifg=#00d7d7 guibg=#191919 gui=none ctermfg=44 ctermbg=234 cterm=none
-hi Folded        guifg=#00d7af guibg=#000000 gui=none ctermfg=45 ctermbg=NONE  cterm=bold
+hi Folded        guifg=#00d7af guibg=#000000 gui=none ctermfg=23 ctermbg=NONE  cterm=bold
 hi Title         guifg=#B3A9BD guibg=NONE	gui=bold ctermfg=249 ctermbg=NONE cterm=bold
 hi Visual        guifg=NONE guibg=#4e4e4e gui=none ctermfg=NONE ctermbg=237 cterm=none
 hi SpecialKey    guifg=#7AB96B guibg=#0F0F0F gui=none ctermfg=107 ctermbg=233 cterm=none

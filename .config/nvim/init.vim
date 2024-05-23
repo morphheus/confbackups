@@ -49,6 +49,15 @@ set scrolloff=8
 
 " Neovim options
 set icm=nosplit
+let g:vim_json_conceal=0 " show the quotes in json files
+"
+"################
+" INDENTING
+"################
+
+set autoindent
+let g:python_indent = {}
+let g:python_indent.disable_parentheses_indenting = 1
 
 
 
@@ -242,7 +251,6 @@ autocmd BufRead,BufNewFile *.pyx setl ft=cython
 
 
 
-
 "################
 " PLUGINS
 "################
@@ -259,10 +267,6 @@ Plugin 'Konfekt/FastFold'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-"Plugin 'ludovicchabant/vim-gutentags'
-
-"Plugin 'majutsushi/tagbar'
-
 Plugin 'scrooloose/nerdtree'
 
 Plugin 'junegunn/fzf'
@@ -271,21 +275,22 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
 
-Plugin 'zchee/deoplete-jedi'
-Plugin 'Shougo/deoplete.nvim'
+"Plugin 'zchee/deoplete-jedi'
+"Plugin 'Shougo/deoplete.nvim'
 Plugin 'roxma/nvim-yarp'
 
-Plugin 'wookayin/semshi'
-
-"Plugin 'ncm2/ncm2'
-"Plugin 'ncm2/ncm2-bufword'
-"Plugin 'ncm2/ncm2-path'
+Plugin 'ncm2/ncm2'
+Plugin 'ncm2/ncm2-bufword'
+Plugin 'ncm2/ncm2-path'
 ""Plugin 'ncm2/ncm2-tagprefix'
-"Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
-"Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
-"Plugin 'ncm2/ncm2-jedi'
-"Plugin 'ncm2/ncm2-pyclang'
-"Plugin 'ncm2/ncm2-vim' | Plugin 'Shougo/neco-vim'
+Plugin 'ncm2/ncm2-syntax' | Plugin 'Shougo/neco-syntax'
+Plugin 'ncm2/ncm2-neoinclude' | Plugin 'Shougo/neoinclude.vim'
+Plugin 'ncm2/ncm2-jedi'
+Plugin 'ncm2/ncm2-pyclang'
+Plugin 'ncm2/ncm2-vim' | Plugin 'Shougo/neco-vim'
+
+"Plugin 'wookayin/semshi'
+Plugin 'nvim-treesitter/nvim-treesitter'
 
 Plugin 'kassio/neoterm'
 Plugin 'neomake/neomake'
@@ -304,12 +309,6 @@ Plugin 'machakann/vim-highlightedyank'
 
 call vundle#end()
 
-" -------------------
-" Tagbar
-"let g:tagbar_autofocus = 1
-"let g:tagbar_left = 1
-"nnoremap <silent> <F5> :TagbarToggle<CR>
-
 
 " -------------------
 " Airline theme
@@ -318,13 +317,13 @@ let g:airline_theme='deus'
 let g:airline#extensions#disable_rtp_load = 1
 "let g:airline_extensions = ['tagbar']
 let g:airline#extensions#default#layout = [
-      \ [ 'a', 'c' ],
-      \ [ 'x', 'z', 'warning'],
-      \ ]
+    \ [ 'a', 'c' ],
+    \ [ 'x', 'z', 'warning'],
+    \ ]
 let g:airline#extensions#default#section_truncate_width = {
-      \ 'x': 80,
-      \ 'z': 45,
-      \ }
+    \ 'x': 80,
+    \ 'z': 45,
+    \ }
 
 
 if !exists('g:airline_symbols')
@@ -338,9 +337,9 @@ let g:airline#extensions#tagbar#flags = 'f'
 let g:airline#extensions#neomake#enabled = 1
 
 function! AirlineInit()
-	let g:airline_section_x = airline#section#create_right(['tagbar'])
-	let g:airline_section_z = "%l/%L:%v"
-	let g:airline_section_warning = "%{neomake#statusline#LoclistStatus('')}"
+    let g:airline_section_x = airline#section#create_right(['tagbar'])
+    let g:airline_section_z = "%l/%L:%v"
+    let g:airline_section_warning = "%{neomake#statusline#LoclistStatus('')}"
 
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()
@@ -359,7 +358,6 @@ let NERDTreeMapJumpLastChild=''
 let NERDTreeMapJumpFirstChild=''
 let NERDTreeMapActivateNode='<Tab>'
 
-
 " -------------------
 " Raibbow paren
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
@@ -376,40 +374,23 @@ let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 " -------------------
 " deoplete
-let g:deoplete#sources#jedi#show_docstring = 1
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#tag#cache_limit_size = 5000000
-call deoplete#custom#option('auto_complete_delay', 100)
-"
+"let g:deoplete#sources#jedi#show_docstring = 1
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#tag#cache_limit_size = 5000000
+"call deoplete#custom#option('auto_complete_delay', 100)
+
 " -------------------
 " ncm2
-"autocmd BufEnter * call ncm2#enable_for_buffer()
-"
-"let g:ncm2#popup_delay = 100
-"let g:ncm2#popup_limit = 5
-"set completeopt=noinsert,menuone,noselect
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+let g:ncm2#popup_delay = 100
+let g:ncm2#popup_limit = 15
+set completeopt=noinsert,menuone,noselect
 
 " -------------------
-" semshi
+" tresitter
 
-"let g:semshi#excluded_hl_groups = ['local', 'free']
-function MyCustomHighlights()
-    hi semshiGlobal          ctermfg=178 
-    hi semshiImported        ctermfg=178 cterm=bold 
-    hi semshiFree            ctermfg=178 
-    hi semshiParameter       ctermfg=86  
-    hi semshiParameterUnused ctermfg=67 cterm=none
-    hi semshiBuiltin         ctermfg=45
-    hi semshiAttribute       ctermfg=253  
-    hi semshiSelf            ctermfg=249 
-    hi semshiUnresolved      ctermfg=226 cterm=underline 
-    hi semshiSelected        ctermfg=none ctermbg=NONE cterm=underline
-    hi semshiErrorSign       ctermfg=231 ctermbg=160 
-    hi semshiErrorChar       ctermfg=231 ctermbg=160 
-    sign define semshiError text=E> texthl=semshiErrorSign
-endfunction
-
-autocmd FileType python call MyCustomHighlights()
+"lua require('config/treesitter')
 
 " -------------------
 " neomake
@@ -483,18 +464,18 @@ autocmd FileType python setlocal completeopt-=preview
 let g:jedi#force_py_version = 3
 let g:jedi#completions_enabled = 0
 let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#show_call_signatures = 1
+let g:jedi#show_call_signatures = 0
 let g:jedi#show_call_signatures_delay = 0
 let g:jedi#documentation_command = "<leader>i"
 let g:jedi#usages_command = "<leader>u"
 let g:jedi#max_doc_height = 15
 
-"augroup jedi_call_signatures
-"autocmd! * <buffer>
-"
-"autocmd InsertEnter <buffer> let s:show_call_signatures_last = [0, 0, '']
-"autocmd InsertLeave <buffer> call g:jedi#clear_call_signatures()
-"inoremap <C-space> <C-o>:call g:jedi#show_call_signatures()<cr>
+augroup jedi_call_signatures
+autocmd! * <buffer>
+
+autocmd InsertEnter <buffer> let s:show_call_signatures_last = [0, 0, '']
+autocmd InsertLeave <buffer> call g:jedi#clear_call_signatures()
+inoremap <C-space> <C-o>:call g:jedi#show_call_signatures()<cr>
 
 
 " -------------------
