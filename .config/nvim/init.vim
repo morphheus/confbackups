@@ -1,4 +1,6 @@
 scriptencoding utf-8
+set notermguicolors
+
 
 set encoding=utf-8
 
@@ -75,8 +77,13 @@ command! Vimrc e ~/.config/nvim/init.vim
 nnoremap <C-u> :noh<CR>
 
 " Tab to indent in visual mode
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
+vnoremap <silent> <Tab> >gv
+vnoremap <silent> <S-Tab> <gv
+
+" Tab to complete in insert more
+inoremap <Tab> <C-n>
+inoremap <S-Tab> <C-p>
+inoreabbrev
 
 " Search always center the buffer
 nnoremap n nzz
@@ -94,15 +101,13 @@ noremap H g<HOME>
 noremap L g<END>
 noremap J 10gj
 noremap K 10gk
-inoremap <HOME> <C-o>g<HOME>
-inoremap <END> <C-o>g<END>
 
-"Arrow keys navigate wrapped lines
-inoremap <silent> <Down> <C-o>gj
-inoremap <silent> <Up> <C-o>gk
-nnoremap <silent> <Down> gj
-nnoremap <silent> <Up> gk
-
+"Alt navigate wrapped lines
+inoremap <silent> <M-j> <C-o>gj
+inoremap <silent> <M-k> <C-o>gk
+nnoremap <silent> <M-j> gj
+nnoremap <silent> <M-k> gk
+"
 "nvim term bindings
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-h> <C-\><C-n><C-w>h
@@ -190,9 +195,6 @@ command! RelToggle call g:ToggleNuMode()
 noremap <F6> :RelToggle<cr>
 
 function! SynStack()
-  if !exists("*synstack")
-    return
-  endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 map gm :call SynStack()<CR>
@@ -273,7 +275,7 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
+"Plugin 'ervandew/supertab'
 
 "Plugin 'zchee/deoplete-jedi'
 "Plugin 'Shougo/deoplete.nvim'
@@ -369,8 +371,8 @@ let g:rainbow_conf = {
 " -------------------
 " supertab
 "cycle backward
-let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 " -------------------
 " deoplete
@@ -423,7 +425,7 @@ let g:neomake_python_pylint_maker = {
             \ '-m', 'pylint',
             \ '--output-format=text',
             \ '--msg-template="{path}:{line}:{column}:{C}: [{msg_id} {symbol}] {msg}"',
-            \ '--rcfile=~/Documents/trunk/SvtPython/pylintrc.txt',
+            \ '--rcfile=~/Documents/source/SvtPython/pylintrc.txt',
             \ '--reports=no'
         \ ],
         \ 'errorformat':
