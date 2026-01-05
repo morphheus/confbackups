@@ -4,7 +4,8 @@ cd ~/github/confbackups
 # FOLDERS BACKUP - must provide path from ~
 # Will be copied relative to ~
 declare -a foldersToBackup=(".config/nvim/colors"
-                            ".config/nvim/init.vim"
+                            ".config/nvim/oldinit.vim"
+                            ".config/nvim/init.lua"
                             ".config/nvim/pylintrc_introspect"
                             ".bash_aliases"
                             ".bashrc")
