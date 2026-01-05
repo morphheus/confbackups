@@ -80,11 +80,6 @@ nnoremap <C-u> :noh<CR>
 vnoremap <silent> <Tab> >gv
 vnoremap <silent> <S-Tab> <gv
 
-" Tab to complete in insert more
-inoremap <Tab> <C-n>
-inoremap <S-Tab> <C-p>
-inoreabbrev
-
 " Search always center the buffer
 nnoremap n nzz
 nnoremap N Nzz
@@ -275,7 +270,7 @@ Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
 Plugin 'davidhalter/jedi-vim'
-"Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 
 "Plugin 'zchee/deoplete-jedi'
 "Plugin 'Shougo/deoplete.nvim'
@@ -303,7 +298,7 @@ Plugin 'lervag/vimtex'
 
 Plugin 'djoshea/vim-autoread'
 
-Plugin 'mhinz/vim-signify'
+"Plugin 'mhinz/vim-signify'
 Plugin 'juneedahamed/vc.vim'
 
 Plugin 'lambdalisue/vim-cython-syntax'
@@ -371,8 +366,8 @@ let g:rainbow_conf = {
 " -------------------
 " supertab
 "cycle backward
-"let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
-"let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 " -------------------
 " deoplete
@@ -420,7 +415,7 @@ let g:neomake_info_sign = {'text': '🡲','texthl': 'NeomakeInfoSign'}
 "let g:neomake_message_sign = {'text': '->','texthl': 'NeomakeMessageSign'}
 
 let g:neomake_python_pylint_maker = {
-        \ 'exe':'python3.7',
+        \ 'exe':'python3.12',
         \ 'args': [
             \ '-m', 'pylint',
             \ '--output-format=text',
