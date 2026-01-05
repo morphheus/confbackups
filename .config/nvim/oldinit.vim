@@ -1,65 +1,14 @@
-scriptencoding utf-8
-set notermguicolors
-
-
-set encoding=utf-8
-
-colorscheme sweylaPy
-
-syntax on
-filetype indent on
-set hidden
-set noshowmode
-set expandtab
-set belloff=all
-set noea
-set ff=unix
-
-autocmd Filetype qf setlocal colorcolumn=0
-
-set backspace=indent,eol,start
-set novb
-set guifont=Ubuntu\ Mono\ 13
-set wrap linebreak
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set shiftround
-set number
-set mouse=a
-set confirm
-set wildmenu
-set wildmode=longest:list,full
-set ruler
-set showmatch
-set showcmd
-set smartcase
-set undolevels=1000
-set list
-set autowrite
-set showbreak=\ \ 
-set lcs=tab:\|\ ,nbsp:~,extends:>,precedes:<
-set timeoutlen=500
-set splitbelow
-set splitright
-set errorformat=%f:%l:\ %m
-set errorformat+=%f:%l
-set shortmess+=ca
-set fillchars+=vert:│
-set cursorline
-set scrolloff=8
-
 " Neovim options
-set icm=nosplit
-let g:vim_json_conceal=0 " show the quotes in json files
+"set icm=nosplit
+"let g:vim_json_conceal=0 " show the quotes in json files
 "
 "################
 " INDENTING
 "################
 
-set autoindent
-let g:python_indent = {}
-let g:python_indent.disable_parentheses_indenting = 1
+"set autoindent
+"let g:python_indent = {}
+"let g:python_indent.disable_parentheses_indenting = 1
 
 
 
@@ -67,184 +16,185 @@ let g:python_indent.disable_parentheses_indenting = 1
 " BINDINGS
 "################
 
-let mapleader = " "
-let tm=200
+" let mapleader = " "
+" let tm=200
+" 
+" " open vimrc
+" command! Vimrc e ~/.config/nvim/init.vim
+" 
+" " clear highlights
+" nnoremap <C-u> :noh<CR>
+" 
+" " Tab to indent in visual mode
+" vnoremap <silent> <Tab> >gv
+" vnoremap <silent> <S-Tab> <gv
+" 
+" " Search always center the buffer
+" nnoremap n nzz
+" nnoremap N Nzz
+" 
+" " e from system clipboard easy.
+" " Copy/Past
+" noremap <leader>p "+p
+" noremap <leader>P "+P
+" noremap <leader>y "+y
+" noremap <leader>Y "+Y
+" 
+" " Remap home/pagedown.
+" noremap H g<HOME>
+" noremap L g<END>
+" noremap J 10gj
+" noremap K 10gk
+" 
+" "Alt navigate wrapped lines
+" inoremap <silent> <M-j> <C-o>gj
+" inoremap <silent> <M-k> <C-o>gk
+" nnoremap <silent> <M-j> gj
+" nnoremap <silent> <M-k> gk
+" "
+" "nvim term bindings
+" tnoremap <Esc> <C-\><C-n>
+" tnoremap <C-h> <C-\><C-n><C-w>h
+" tnoremap <C-j> <C-\><C-n><C-w>j
+" tnoremap <C-k> <C-\><C-n><C-w>k
+" tnoremap <C-l> <C-\><C-n><C-w>l
+" 
+" "Split abbreviations
+" cabbrev o only
+" cabbrev vres vertical<space>resize
+" 
+" "Split resize
+" noremap <silent> <M-Left>  :vertical<space>resize<space>-5<cr>
+" noremap <silent> <M-Right> :vertical<space>resize<space>+5<cr>
+" noremap <silent> <M-Up>    :res<space>+5<cr>
+" noremap <silent> <M-Down>  :res<space>-5<cr>
+" 
+" inoremap <silent> <M-Left>  <esc>:vertical<space>resize<space>-5<cr>a
+" inoremap <silent> <M-Right> <esc>:vertical<space>resize<space>+5<cr>a
+" inoremap <silent> <M-Up>    <esc>:res<space>+5<cr>a
+" inoremap <silent> <M-Down>  <esc>:res<space>-5<cr>a
+" 
+" tnoremap <silent> <M-Left>  <C-\><C-n>:vertical<space>resize<space>-5<cr>a
+" tnoremap <silent> <M-Right> <C-\><C-n>:vertical<space>resize<space>+5<cr>a
+" tnoremap <silent> <M-Up>    <C-\><C-n>:res<space>+5<cr>a
+" tnoremap <silent> <M-Down>  <C-\><C-n>:res<space>-5<cr>a
+" 
+" nnoremap <F9> :vertical resize 88<cr>
+" nnoremap <F10> :vertical resize 120<cr>
+" nnoremap <F12> <C-w>=
+" 
+" " Split navigation
+" nnoremap <C-j> <C-W><C-J>
+" nnoremap <C-k> <C-W><C-K>
+" nnoremap <C-l> <C-W><C-L>
+" nnoremap <C-h> <C-W><C-H>
+" 
+" " Redo last macro
+" nnoremap \ @@
+" 
+" " Numerical increments/decrements
+" autocmd VimEnter * nnoremap + <C-a>
+" autocmd VimEnter * nnoremap _ <C-x>
+" 
+" " Insert enter from normal nmode
+" nnoremap <expr> <Enter> &ma?"i\<cr>\<esc>`^":"\<cr>"
 
-" open vimrc
-command! Vimrc e ~/.config/nvim/init.vim
-
-" clear highlights
-nnoremap <C-u> :noh<CR>
-
-" Tab to indent in visual mode
-vnoremap <silent> <Tab> >gv
-vnoremap <silent> <S-Tab> <gv
-
-" Search always center the buffer
-nnoremap n nzz
-nnoremap N Nzz
-
-" e from system clipboard easy.
-" Copy/Past
-noremap <leader>p "+p
-noremap <leader>P "+P
-noremap <leader>y "+y
-noremap <leader>Y "+Y
-
-" Remap home/pagedown.
-noremap H g<HOME>
-noremap L g<END>
-noremap J 10gj
-noremap K 10gk
-
-"Alt navigate wrapped lines
-inoremap <silent> <M-j> <C-o>gj
-inoremap <silent> <M-k> <C-o>gk
-nnoremap <silent> <M-j> gj
-nnoremap <silent> <M-k> gk
+"" Insert enter and adjust text to match the original cursor column
+"nnoremap <silent> g<Enter> :<C-U> 
+"  \let currentColumn=col(".")<CR>
+"  \i<cr><esc>`^
+"  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>l
 "
-"nvim term bindings
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-h> <C-\><C-n><C-w>h
-tnoremap <C-j> <C-\><C-n><C-w>j
-tnoremap <C-k> <C-\><C-n><C-w>k
-tnoremap <C-l> <C-\><C-n><C-w>l
+"" Insert newline and add spaces to match the original cursor columns
+"nnoremap <silent> go :<C-U> 
+"  \let currentColumn=col(".")<CR>
+"  \o<esc>`^
+"  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>a
+"
+"" Search visual selection
+"vnoremap <silent> * :<C-U> 
+"  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+"  \gvy/<C-R><C-R>=substitute(
+"  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+"  \gV:call setreg('"', old_reg, old_regtype)<CR>
+"
+"" Only highlight, no search (does not affect jump and search history"
+"nnoremap <silent> <Leader>8 :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+"vnoremap <silent> <Leader>8 :<C-U>
+"  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+"  \gvy:let @/=substitute(
+"  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR>
+"  \gV:call setreg('"', old_reg, old_regtype)<CR>:set hls<CR>
+"
+"" relative line toggle
+"function! g:ToggleNuMode()
+"  if(&relativenumber == 1)
+"    set norelativenumber
+"  else
+"    set relativenumber
+"  endif
+"endfunc
+"
+"command! RelToggle call g:ToggleNuMode()
+"noremap <F6> :RelToggle<cr>
+"
 
-"Split abbreviations
-cabbrev o only
-cabbrev vres vertical<space>resize
-
-"Split resize
-noremap <silent> <M-Left>  :vertical<space>resize<space>-5<cr>
-noremap <silent> <M-Right> :vertical<space>resize<space>+5<cr>
-noremap <silent> <M-Up>    :res<space>+5<cr>
-noremap <silent> <M-Down>  :res<space>-5<cr>
-
-inoremap <silent> <M-Left>  <esc>:vertical<space>resize<space>-5<cr>a
-inoremap <silent> <M-Right> <esc>:vertical<space>resize<space>+5<cr>a
-inoremap <silent> <M-Up>    <esc>:res<space>+5<cr>a
-inoremap <silent> <M-Down>  <esc>:res<space>-5<cr>a
-
-tnoremap <silent> <M-Left>  <C-\><C-n>:vertical<space>resize<space>-5<cr>a
-tnoremap <silent> <M-Right> <C-\><C-n>:vertical<space>resize<space>+5<cr>a
-tnoremap <silent> <M-Up>    <C-\><C-n>:res<space>+5<cr>a
-tnoremap <silent> <M-Down>  <C-\><C-n>:res<space>-5<cr>a
-
-nnoremap <F9> :vertical resize 88<cr>
-nnoremap <F10> :vertical resize 120<cr>
-nnoremap <F12> <C-w>=
-
-" Split navigation
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
-nnoremap <C-h> <C-W><C-H>
-
-" Redo last macro
-nnoremap \ @@
-
-" Numerical increments/decrements
-autocmd VimEnter * nnoremap + <C-a>
-autocmd VimEnter * nnoremap _ <C-x>
-
-" Insert enter from normal nmode
-nnoremap <expr> <Enter> &ma?"i\<cr>\<esc>`^":"\<cr>"
-
-" Insert enter and adjust text to match the original cursor column
-nnoremap <silent> g<Enter> :<C-U> 
-  \let currentColumn=col(".")<CR>
-  \i<cr><esc>`^
-  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>l
-
-" Insert newline and add spaces to match the original cursor columns
-nnoremap <silent> go :<C-U> 
-  \let currentColumn=col(".")<CR>
-  \o<esc>`^
-  \:exec 'norm '.(g:currentColumn-col(".")).'i '<CR>a
-
-" Search visual selection
-vnoremap <silent> * :<C-U> 
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy/<C-R><C-R>=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-" Only highlight, no search (does not affect jump and search history"
-nnoremap <silent> <Leader>8 :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-vnoremap <silent> <Leader>8 :<C-U>
-  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-  \gvy:let @/=substitute(
-  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR>
-  \gV:call setreg('"', old_reg, old_regtype)<CR>:set hls<CR>
-
-" relative line toggle
-function! g:ToggleNuMode()
-  if(&relativenumber == 1)
-    set norelativenumber
-  else
-    set relativenumber
-  endif
-endfunc
-
-command! RelToggle call g:ToggleNuMode()
-noremap <F6> :RelToggle<cr>
-
-function! SynStack()
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-map gm :call SynStack()<CR>
-
-" Location list/quickfix bindings. Can only have loclist or quickfix open at a
-" time, never both. Broken when switching windows and attempting to open a
-" new loclist there
-" The bindings switch depending wether the loclist or the quickfix was last
-" opened
-let g:loclist_is_open = 0
-let g:quickfix_is_open = 0
-
-function! LocListToggle()
-    if g:loclist_is_open
-        lclose
-        let g:loclist_is_open = 0
-    else
-        let g:loclist_is_open = 1
-        let g:loclist_return_to_window = winnr()
-        lopen 8
-        execute g:loclist_return_to_window . "wincmd w"
-
-    endif
-endfunction
-
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-
-    else
-        let g:quickfix_is_open = 1
-        let g:quickfix_return_to_window = winnr()
-
-        botright copen 7
-        " Global bottom window for quickfix
-        execute g:quickfix_return_to_window . "wincmd w"
-    endif
-endfunction
-
-autocmd BufWinEnter quickfix let g:quickfix_is_open = 1
-
-nnoremap <silent> <leader>a :call LocListToggle()<cr>
-nnoremap <silent> <leader><Tab> :call QuickfixToggle()<cr>
-
-nnoremap <silent> <Tab> :cnext<cr>
-nnoremap <silent> <S-Tab> :cprev<cr>
-
-nnoremap <silent> <leader><leader> :ll<cr>
-nnoremap <silent> <C-n> :lnext<cr>
-nnoremap <silent> <M-n> :lprev<cr>
-
-
-" File type assignement
-autocmd BufRead,BufNewFile *.pyx setl ft=cython 
+"function! SynStack()
+"  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+"endfunc
+"map gm :call SynStack()<CR>
+"
+"" Location list/quickfix bindings. Can only have loclist or quickfix open at a
+"" time, never both. Broken when switching windows and attempting to open a
+"" new loclist there
+"" The bindings switch depending wether the loclist or the quickfix was last
+"" opened
+"let g:loclist_is_open = 0
+"let g:quickfix_is_open = 0
+"
+"function! LocListToggle()
+"    if g:loclist_is_open
+"        lclose
+"        let g:loclist_is_open = 0
+"    else
+"        let g:loclist_is_open = 1
+"        let g:loclist_return_to_window = winnr()
+"        lopen 8
+"        execute g:loclist_return_to_window . "wincmd w"
+"
+"    endif
+"endfunction
+"
+"function! QuickfixToggle()
+"    if g:quickfix_is_open
+"        cclose
+"        let g:quickfix_is_open = 0
+"
+"    else
+"        let g:quickfix_is_open = 1
+"        let g:quickfix_return_to_window = winnr()
+"
+"        botright copen 7
+"        " Global bottom window for quickfix
+"        execute g:quickfix_return_to_window . "wincmd w"
+"    endif
+"endfunction
+"
+"autocmd BufWinEnter quickfix let g:quickfix_is_open = 1
+"
+"nnoremap <silent> <leader>a :call LocListToggle()<cr>
+"nnoremap <silent> <leader><Tab> :call QuickfixToggle()<cr>
+"
+"nnoremap <silent> <Tab> :cnext<cr>
+"nnoremap <silent> <S-Tab> :cprev<cr>
+"
+"nnoremap <silent> <leader><leader> :ll<cr>
+"nnoremap <silent> <C-n> :lnext<cr>
+"nnoremap <silent> <M-n> :lprev<cr>
+"
+"
+"" File type assignement
+"autocmd BufRead,BufNewFile *.pyx setl ft=cython 
 
 
 
@@ -526,14 +476,14 @@ command! -bang FPyLines call fzf#vim#grep(
    \ {'options': '--reverse --prompt "FPyLines> " --color hl:45,hl+:51 '})
 
 " fzf windows maps
-nnoremap <silent> <leader>q :Buffers<cr>
-nnoremap <silent> <leader>w :Files<cr>
-nnoremap <silent> <leader>/ :BLines<cr>
-nnoremap <silent> <leader>\ :Lines<cr>
-nnoremap <silent> <leader>t :BTags<cr>
-nnoremap <silent> <leader>T :Tags<cr>
-nnoremap <silent> <leader>e :FPyLines<cr>
-nnoremap <silent> <leader>E :FLines<cr>
+nnoremap <leader>q :Buffers<cr>
+nnoremap <leader>w :Files<cr>
+nnoremap <leader>/ :BLines<cr>
+nnoremap <leader>\ :Lines<cr>
+nnoremap <leader>t :BTags<cr>
+nnoremap <leader>T :Tags<cr>
+nnoremap <leader>e :FPyLines<cr>
+nnoremap <leader>E :FLines<cr>
 
 function! Fzf_build_quickfix_list(lines)
     let! g:tempVal = copy(a:lines)
@@ -617,26 +567,12 @@ autocmd BufRead, BufNewFile *.py setlocal signcolumn=yes
 " LAYOUTS
 "################
 
-" 1 main block, one terminal, one small window above the terminal
-function! g:SetLayout00()
-  set colorcolumn=80
-  execute "normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>:split\<cr>\<C-w>\<C-k>\<Esc>:resize 25\<cr>\<Esc>:b1\<cr>\<C-w>\<C-h>"
-endfunc
-command! SL0 call g:SetLayout00()
-
 " nice "ide" layouy. Same as 00, but without the small window
 function! g:SetLayout01()
   set colorcolumn=80
-  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 80\<cr>\<C-w>\<C-h>\<Esc>"
+  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 80\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"
 endfunc
 command! SL1 call g:SetLayout01()
-
-" Same as 01, but the main window has 2 splits
-function! g:SetLayout02()
-  set colorcolumn=80
-  execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 70\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"
-endfunc
-command! SL2 call g:SetLayout02()
 
 " latexlayout
 function! g:SetLayoutTex()
