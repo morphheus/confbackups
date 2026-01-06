@@ -10,6 +10,7 @@ vim.opt.termguicolors = false
 vim.cmd('colorscheme sweylaPy')
 
 -- General Behavior
+vim.opt.autoread = true
 vim.opt.showmode = false
 vim.opt.expandtab = true
 vim.opt.belloff = 'all'
@@ -331,7 +332,7 @@ require("lazy").setup({
     "vim-scripts/vim-indent-object",
     "lervag/vimtex",
 
-    "djoshea/vim-autoread",
+    "mhinz/vim-signify",
 
     "lambdalisue/vim-cython-syntax",
     "machakann/vim-highlightedyank",
@@ -345,7 +346,7 @@ require("lazy").setup({
 
 
 -- indent-blankline.nvim
-require("ibl").setup()
+-- require("ibl").setup()
 
 -- --------------
 -- Plugin: vim-airline
@@ -681,11 +682,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- nice "ide" layout
 function _G.SetLayout01()
   vim.opt.colorcolumn = "80"
-  vim.cmd([[silent normal! :vertical Tnew<cr>]])
-  vim.cmd([[execute "normal! \<C-w>\<C-l>"]])
-  vim.cmd([[vertical resize 80]])
-  vim.cmd([[execute "normal! \<C-w>\<C-h>"]])
-  vim.cmd([[vs]])
+  vim.cmd([[execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 80\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"]])
 end
 vim.api.nvim_create_user_command("SL1", _G.SetLayout01, {})
 
@@ -693,11 +690,7 @@ vim.api.nvim_create_user_command("SL1", _G.SetLayout01, {})
 function _G.SetLayoutTex()
   vim.fn.setreg("m", "latexmk -pdf -pvc -interaction=nonstopmode -view=none\r")
   vim.opt.conceallevel = 0
-  vim.cmd([[autocmd! BufWinEnter,WinEnter term://*]])
-  vim.cmd([[bel Tnew]])
-  vim.cmd([[execute "normal! \<C-w>\<C-j>"]])
-  vim.cmd([[resize 15]])
-  vim.cmd([[execute "normal! \"mp\<C-w>\<C-k>"]])
+  vim.cmd([[execute "normal! :autocmd! BufWinEnter,WinEnter term://*\<cr>:bel Tnew\<cr>\<C-w>\<C-j>:resize 15\<cr>\"mp\<C-w>\<C-k>"]])
 end
 vim.api.nvim_create_user_command("SetLayoutTex", _G.SetLayoutTex, {})
 
