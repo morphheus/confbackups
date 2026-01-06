@@ -1,6 +1,5 @@
 -- ----------------
 -- GENERAL SETTINGS
--- ----------------
 
 -- Standard Encoding
 vim.scriptencoding = 'utf-8'
@@ -128,24 +127,24 @@ vim.cmd([[
 
 -- Split resizing
 local resize_opts = { silent = true }
-vim.keymap.set('n', '<M-Left>', ':vertical resize -5<cr>', resize_opts)
-vim.keymap.set('n', '<M-Right>', ':vertical resize +5<cr>', resize_opts)
-vim.keymap.set('n', '<M-Up>', ':res +5<cr>', resize_opts)
-vim.keymap.set('n', '<M-Down>', ':res -5<cr>', resize_opts)
+vim.keymap.set('n', '<M-Left>',  ':vertical resize -5<cr>',                { silent = true })
+vim.keymap.set('n', '<M-Right>', ':vertical resize +5<cr>',                { silent = true })
+vim.keymap.set('n', '<M-Up>',    ':res +5<cr>',                            { silent = true })
+vim.keymap.set('n', '<M-Down>',  ':res -5<cr>',                            { silent = true })
 
-vim.keymap.set('i', '<M-Left>', '<esc>:vertical resize -5<cr>a', resize_opts)
-vim.keymap.set('i', '<M-Right>', '<esc>:vertical resize +5<cr>a', resize_opts)
-vim.keymap.set('i', '<M-Up>', '<esc>:res +5<cr>a', resize_opts)
-vim.keymap.set('i', '<M-Down>', '<esc>:res -5<cr>a', resize_opts)
+vim.keymap.set('i', '<M-Left>',  '<esc>:vertical resize -5<cr>a',          { silent = true })
+vim.keymap.set('i', '<M-Right>', '<esc>:vertical resize +5<cr>a',          { silent = true })
+vim.keymap.set('i', '<M-Up>',    '<esc>:res +5<cr>a',                      { silent = true })
+vim.keymap.set('i', '<M-Down>',  '<esc>:res -5<cr>a',                      { silent = true })
 
-vim.keymap.set('t', '<M-Left>', [[<C-\><C-n>:vertical resize -5<cr>a]], resize_opts)
-vim.keymap.set('t', '<M-Right>', [[<C-\><C-n>:vertical resize +5<cr>a]], resize_opts)
-vim.keymap.set('t', '<M-Up>', [[<C-\><C-n>:res +5<cr>a]], resize_opts)
-vim.keymap.set('t', '<M-Down>', [[<C-\><C-n>:res -5<cr>a]], resize_opts)
+vim.keymap.set('t', '<M-Left>',  [[<C-\><C-n>:vertical resize -5<cr>a]],   { silent = true })
+vim.keymap.set('t', '<M-Right>', [[<C-\><C-n>:vertical resize +5<cr>a]],   { silent = true })
+vim.keymap.set('t', '<M-Up>',    [[<C-\><C-n>:res +5<cr>a]],               { silent = true })
+vim.keymap.set('t', '<M-Down>',  [[<C-\><C-n>:res -5<cr>a]],               { silent = true })
 
-vim.keymap.set('n', '<F9>', ':vertical resize 88<cr>')
-vim.keymap.set('n', '<F10>', ':vertical resize 120<cr>')
-vim.keymap.set('n', '<F12>', '<C-w>=')
+vim.keymap.set('n', '<F9>',      ':vertical resize 88<cr>')
+vim.keymap.set('n', '<F10>',     ':vertical resize 120<cr>')
+vim.keymap.set('n', '<F12>',     '<C-w>=')
 
 -- Split navigation
 vim.keymap.set('n', '<C-j>', '<C-W><C-J>')

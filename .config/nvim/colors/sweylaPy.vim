@@ -74,4 +74,5 @@ hi ColorColumn      ctermbg=234 cterm=none
 
 hi SignColumn       cterm=bold ctermfg=255 ctermbg=NONE
 
+hi IblIndent        ctermfg=239
 
