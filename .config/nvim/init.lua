@@ -143,10 +143,6 @@ vim.keymap.set('t', '<M-Right>', [[<C-\><C-n>:vertical resize +5<cr>a]],   { sil
 vim.keymap.set('t', '<M-Up>',    [[<C-\><C-n>:res +5<cr>a]],               { silent = true })
 vim.keymap.set('t', '<M-Down>',  [[<C-\><C-n>:res -5<cr>a]],               { silent = true })
 
-vim.keymap.set('n', '<F9>',      ':vertical resize 88<cr>')
-vim.keymap.set('n', '<F10>',     ':vertical resize 120<cr>')
-vim.keymap.set('n', '<F12>',     '<C-w>=')
-
 -- Split navigation
 vim.keymap.set('n', '<C-j>', '<C-W><C-J>')
 vim.keymap.set('n', '<C-k>', '<C-W><C-K>')
@@ -268,7 +264,6 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- ---------------
 
 
-
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -292,8 +287,10 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
+
   spec = {
     "https://github.com/lukas-reineke/indent-blankline.nvim",
+
     "luochen1990/rainbow",
     "Konfekt/FastFold",
 
@@ -305,24 +302,12 @@ require("lazy").setup({
     "junegunn/fzf",
     "junegunn/fzf.vim",
 
-    "davidhalter/jedi-vim",
-    "ervandew/supertab",
-
-    "roxma/nvim-yarp",
-
-    "ncm2/ncm2",
-    "ncm2/ncm2-bufword",
-    "ncm2/ncm2-path",
-    --"ncm2/ncm2-tagprefix",
-    "ncm2/ncm2-syntax",
-    "ncm2/ncm2-neoinclude",
-    "ncm2/ncm2-jedi",
-    "ncm2/ncm2-pyclang",
-    "ncm2/ncm2-vim",
-
-    "Shougo/neco-syntax",
-    "Shougo/neco-vim",
-    "Shougo/neoinclude.vim",
+    "hrsh7th/nvim-cmp",
+    "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "onsails/lspkind.nvim",
 
     "nvim-treesitter/nvim-treesitter",
 
@@ -337,16 +322,10 @@ require("lazy").setup({
     "lambdalisue/vim-cython-syntax",
     "machakann/vim-highlightedyank",
   },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
   -- automatically check for plugin updates
   checker = { enabled = false },
 })
 
-
--- indent-blankline.nvim
--- require("ibl").setup()
 
 -- --------------
 -- Plugin: vim-airline
@@ -401,30 +380,33 @@ vim.g.NERDTreeMapActivateNode = '<Tab>'
 
 -- -------------------
 -- Plugin: rainbow
-vim.g.rainbow_active = 1
 vim.g.rainbow_conf = {
-  ctermfgs = { 'white', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta' },
-  operators = '_,\\|+\\|-\\|*\\|===\\|!==_'
+    ctermfgs = { 'white', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta' },
+    operators = '_,\\|+\\|-\\|*\\|===\\|!==_',
 }
+vim.g.rainbow_active = 1
+vim.cmd("syntax on")
+
 
 
 -- -------------------
 -- Plugin: supertab
-vim.g.SuperTabDefaultCompletionType = "<c-x><c-o>"
-vim.g.SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
+-- vim.g.SuperTabDefaultCompletionType = "<c-x><c-o>"
+-- vim.g.SuperTabConontextDefaultCompletionType = "<c-x><c-o>"
 
 -- -------------------
 -- Plugin: ncm2
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "*",
-  callback = function()
-    vim.fn["ncm2#enable_for_buffer"]()
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = "*",
+--   callback = function()
+--     vim.fn["ncm2#enable_for_buffer"]()
+--   end,
+-- })
+-- 
+-- vim.g["ncm2#popup_delay"] = 100
+-- vim.g["ncm2#popup_limit"] = 15
+-- vim.opt.completeopt = { "noinsert", "menuone", "noselect" }
 
-vim.g["ncm2#popup_delay"] = 100
-vim.g["ncm2#popup_limit"] = 15
-vim.opt.completeopt = { "noinsert", "menuone", "noselect" }
 
 -- -------------------
 -- Plugin: neomake
@@ -481,56 +463,6 @@ vim.api.nvim_set_hl(0, "NeomakeWarning",     { fg = 15, bg = 124, underline = tr
 vim.api.nvim_set_hl(0, "NeomakeInfo",        { fg = 15, bg = 124, underline = true })
 vim.api.nvim_set_hl(0, "NeomakeMessage",     { fg = 15, bg = 124, underline = true })
 
-
--- -------------------
--- Plugin: jedi
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  pattern = "__doc__",
-  callback = function()
-    vim.opt_local.bufhidden = "delete"
-  end,
-})
-
-vim.api.nvim_create_autocmd("BufLeave", {
-  pattern = "__doc__",
-  command = "q",
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "python",
-  callback = function()
-    vim.opt_local.completeopt:remove("preview")
-  end,
-})
-
-vim.g["jedi#force_py_version"] = 3
-vim.g["jedi#completions_enabled"] = 0
-vim.g["jedi#goto_assignments_command"] = "<leader>g"
-vim.g["jedi#show_call_signatures"] = 0
-vim.g["jedi#show_call_signatures_delay"] = 0
-vim.g["jedi#documentation_command"] = "<leader>i"
-vim.g["jedi#usages_command"] = "<leader>u"
-vim.g["jedi#max_doc_height"] = 15
-
-local jedi_group = vim.api.nvim_create_augroup("jedi_call_signatures", { clear = true })
-
-vim.api.nvim_create_autocmd("InsertEnter", {
-  group = jedi_group,
-  buffer = 0,
-  callback = function()
-    vim.b.show_call_signatures_last = { 0, 0, "" }
-  end,
-})
-
-vim.api.nvim_create_autocmd("InsertLeave", {
-  group = jedi_group,
-  buffer = 0,
-  callback = function()
-    vim.fn["g:jedi#clear_call_signatures"]()
-  end,
-})
-
-vim.keymap.set("i", "<C-space>", "<C-o>:call g:jedi#show_call_signatures()<cr>", { noremap = true })
 
 -- -------------------
 -- Plugin: vim-signify
@@ -675,16 +607,83 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+
+-- indent-blankline.nvim
+require("ibl").setup()
+
+-- Plugin: jedi lsp config
+--------------------
+
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+vim.lsp.config('jedi_language_server', {
+    capabilities = lsp_capabilities,
+    -- Optional: additional settings for jedi, e.g. enabling parameter snippets
+    settings = {
+        pylsp = {
+            plugins = {
+                jedi_completion = {
+                    include_params = true,
+                },
+            },
+        },
+    },
+})
+vim.lsp.enable('jedi_language_server')
+
+-- Plugin: nvim-cmp
+--------------------
+
+local cmp = require('cmp')
+
+cmp.setup({
+    -- Configure your completion sources
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' }, -- Primary source for LSP (jedi) completion
+        { name = 'buffer' },   -- Fallback to buffer words
+        { name = 'path' },     -- Path completion
+    }),
+    -- Define mappings (example)
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        --['<C-e>'] = cmp.mapping.abort(),         -- Abort completion
+        -- Supertab like behaviour
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert }) 
+            else
+                fallback()
+            end
+        end, { "i", "s", }),
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert }) 
+            else
+                fallback()
+            end
+        end, { "i", "s",
+        }),
+    }),
+    -- Optional: configure the appearance of the completion menu
+    formatting = {
+        format = require('lspkind').cmp_format({
+            with_codicons = true,
+            -- ... other formatting options
+        })
+    },
+    -- ... other nvim-cmp configurations
+})
+
 -- ----------------
 -- LAYOUTS
 -- ----------------
 
 -- nice "ide" layout
-function _G.SetLayout01()
+vim.keymap.set('n', '<F9>', function()
   vim.opt.colorcolumn = "80"
   vim.cmd([[execute "silent normal! :vertical Tnew\<cr>\<C-w>\<C-l>\<Esc>:vertical resize 80\<cr>\<C-w>\<C-h>\<Esc>:vs\<cr>"]])
-end
-vim.api.nvim_create_user_command("SL1", _G.SetLayout01, {})
+end)
 
 -- latexlayout
 function _G.SetLayoutTex()

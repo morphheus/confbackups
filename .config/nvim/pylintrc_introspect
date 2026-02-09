@@ -60,7 +60,7 @@ load-plugins=
 # E1135 is "Value ... doesn't support membership test"
 # E1133 is "Non-iterable value ... is used in an iterating context"
 # E1136 is "Value ... is unsubscriptable"
-disable=R0102,R0201,W0221,W0201,W0142,W0110,W0108,W0703,W0212,W0105,W0122,W0603,C0326,C0325,W0633,C0330,E1133,E1135,E1136, I0011
+disable=R0102,R0201,W0221,W0201,W0142,W0110,W0108,W0703,W0212,W0105,W0122,W0603,C0326,C0325,W0633,C0330,E1133,E1135,E1136,I0011,R1722
 
 [REPORTS]
 
