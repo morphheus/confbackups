@@ -259,6 +259,15 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   end,
 })
 
+
+-- Visual mode text alignement, using the external 'column' unix utility
+-- Maybe use lazy.align instead?
+vim.keymap.set('v', 'ga=', [[:'<,'>!column -t -L -s= -o=<CR>gv]], {silent = True})
+vim.keymap.set('v', 'ga,', [[:'<,'>!column -t -L -s, -o,<CR>gv]], {silent = True})
+vim.keymap.set('v', 'ga(', [[:'<,'>!column -t -L -s\( -o\(<CR>gv]], {silent = True})
+vim.keymap.set('v', 'ga[', [[:'<,'>!column -t -L -s\[ -o\[<CR>gv]], {silent = True})
+vim.keymap.set('v', 'ga{', [[:'<,'>!column -t -L -s\{ -o\{<CR>gv]], {silent = True})
+
 -- ---------------
 -- LAZY.VIM
 -- ---------------
@@ -284,47 +293,6 @@ vim.opt.rtp:prepend(lazypath)
 -- ---------------
 -- PLUGINS
 -- ---------------
-
--- Setup lazy.nvim
-require("lazy").setup({
-
-  spec = {
-    "https://github.com/lukas-reineke/indent-blankline.nvim",
-
-    "luochen1990/rainbow",
-    "Konfekt/FastFold",
-
-    "vim-airline/vim-airline",
-    "vim-airline/vim-airline-themes",
-
-    "scrooloose/nerdtree",
-
-    "junegunn/fzf",
-    "junegunn/fzf.vim",
-
-    "hrsh7th/nvim-cmp",
-    "neovim/nvim-lspconfig",
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "onsails/lspkind.nvim",
-
-    "nvim-treesitter/nvim-treesitter",
-
-    "kassio/neoterm",
-    "neomake/neomake",
-
-    "vim-scripts/vim-indent-object",
-    "lervag/vimtex",
-
-    "mhinz/vim-signify",
-
-    "lambdalisue/vim-cython-syntax",
-    "machakann/vim-highlightedyank",
-  },
-  -- automatically check for plugin updates
-  checker = { enabled = false },
-})
 
 
 -- --------------
@@ -463,6 +431,56 @@ vim.api.nvim_set_hl(0, "NeomakeWarning",     { fg = 15, bg = 124, underline = tr
 vim.api.nvim_set_hl(0, "NeomakeInfo",        { fg = 15, bg = 124, underline = true })
 vim.api.nvim_set_hl(0, "NeomakeMessage",     { fg = 15, bg = 124, underline = true })
 
+
+-- -------------------
+-- Plugin: jedi
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  pattern = "__doc__",
+  callback = function()
+    vim.opt_local.bufhidden = "delete"
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufLeave", {
+  pattern = "__doc__",
+  command = "q",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.opt_local.completeopt:remove("preview")
+  end,
+})
+
+vim.g["jedi#force_py_version"] = 3
+vim.g["jedi#completions_enabled"] = 0
+vim.g["jedi#goto_assignments_command"] = "<leader>g"
+vim.g["jedi#show_call_signatures"] = 0
+vim.g["jedi#show_call_signatures_delay"] = 0
+vim.g["jedi#documentation_command"] = "<leader>i"
+vim.g["jedi#usages_command"] = "<leader>u"
+vim.g["jedi#max_doc_height"] = 15
+
+local jedi_group = vim.api.nvim_create_augroup("jedi_call_signatures", { clear = true })
+
+vim.api.nvim_create_autocmd("InsertEnter", {
+  group = jedi_group,
+  buffer = 0,
+  callback = function()
+    vim.b.show_call_signatures_last = { 0, 0, "" }
+  end,
+})
+
+vim.api.nvim_create_autocmd("InsertLeave", {
+  group = jedi_group,
+  buffer = 0,
+  callback = function()
+    vim.fn["g:jedi#clear_call_signatures"]()
+  end,
+})
+
+vim.keymap.set("i", "<C-space>", "<C-o>:call g:jedi#show_call_signatures()<cr>", { noremap = true })
 
 -- -------------------
 -- Plugin: vim-signify
@@ -608,6 +626,50 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 
+-- Setup lazy.nvim
+require("lazy").setup({
+
+  spec = {
+    "https://github.com/lukas-reineke/indent-blankline.nvim",
+
+    "luochen1990/rainbow",
+    --"Konfekt/FastFold",
+
+    "vim-airline/vim-airline",
+    "vim-airline/vim-airline-themes",
+
+    "scrooloose/nerdtree",
+
+    "junegunn/fzf",
+    "junegunn/fzf.vim",
+
+    "davidhalter/jedi-vim",
+
+    "hrsh7th/nvim-cmp",
+    "neovim/nvim-lspconfig",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    --"hrsh7th/cmp-path",
+    "FelipeLema/cmp-async-path",
+    "onsails/lspkind.nvim",
+
+    "nvim-treesitter/nvim-treesitter",
+
+    "kassio/neoterm",
+    "neomake/neomake",
+
+    "vim-scripts/vim-indent-object",
+    "lervag/vimtex",
+
+    "mhinz/vim-signify",
+
+    "lambdalisue/vim-cython-syntax",
+    "machakann/vim-highlightedyank",
+  },
+  -- automatically check for plugin updates
+  checker = { enabled = false },
+})
+
 -- indent-blankline.nvim
 require("ibl").setup()
 
@@ -641,7 +703,7 @@ cmp.setup({
     sources = cmp.config.sources({
         { name = 'nvim_lsp' }, -- Primary source for LSP (jedi) completion
         { name = 'buffer' },   -- Fallback to buffer words
-        { name = 'path' },     -- Path completion
+        { name = 'async_path'},
     }),
     -- Define mappings (example)
     mapping = cmp.mapping.preset.insert({
