@@ -7,7 +7,7 @@ vim.opt.encoding = 'utf-8'
 
 -- UI and Theme
 vim.opt.termguicolors = false
-vim.cmd('colorscheme sweylaPy')
+--vim.cmd('colorscheme sweylaPy')
 
 -- General Behavior
 vim.opt.autoread = true
@@ -264,6 +264,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 -- Maybe use lazy.align instead?
 vim.keymap.set('v', 'ga=', [[:'<,'>!column -t -L -s= -o=<CR>gv]], {silent = True})
 vim.keymap.set('v', 'ga,', [[:'<,'>!column -t -L -s, -o,<CR>gv]], {silent = True})
+vim.keymap.set('v', 'ga:', [[:'<,'>!column -t -L -s: -o:<CR>gv]], {silent = True})
 vim.keymap.set('v', 'ga(', [[:'<,'>!column -t -L -s\( -o\(<CR>gv]], {silent = True})
 vim.keymap.set('v', 'ga[', [[:'<,'>!column -t -L -s\[ -o\[<CR>gv]], {silent = True})
 vim.keymap.set('v', 'ga{', [[:'<,'>!column -t -L -s\{ -o\{<CR>gv]], {silent = True})
@@ -349,7 +350,7 @@ vim.g.NERDTreeMapActivateNode = '<Tab>'
 -- -------------------
 -- Plugin: rainbow
 vim.g.rainbow_conf = {
-    ctermfgs = { 'white', 'lightblue', 'lightyellow', 'lightcyan', 'lightmagenta' },
+    ctermfgs = {'lightblue',  'white', 'lightyellow', 'lightcyan', 'lightmagenta' },
     operators = '_,\\|+\\|-\\|*\\|===\\|!==_',
 }
 vim.g.rainbow_active = 1
@@ -665,6 +666,24 @@ require("lazy").setup({
 
     "lambdalisue/vim-cython-syntax",
     "machakann/vim-highlightedyank",
+    {
+      'sainnhe/gruvbox-material',
+      lazy = false,
+      priority = 1000,
+      config = function()
+        -- Optionally configure and load the colorscheme
+        -- directly inside the plugin declaration.
+        vim.g.gruvbox_material_enable_italic = false
+        vim.g.gruvbox_material_enable_bold = true 
+        vim.g.gruvbox_material_transparent_background = 2
+        vim.g.gruvbox_material_background = 'hard'
+        vim.g.gruvbox_material_foreground = 'original'
+        vim.g.gruvbox_material_better_performance = 1
+        vim.cmd.colorscheme('gruvbox-material')
+      end
+    },
+    --{ "EdenEast/nightfox.nvim" },
+    -- { "rebelot/kanagawa" },
   },
   -- automatically check for plugin updates
   checker = { enabled = false },
@@ -672,6 +691,49 @@ require("lazy").setup({
 
 -- indent-blankline.nvim
 require("ibl").setup()
+
+
+---- nighfox
+--require('nightfox').setup({
+--    options = {
+--        -- Compiled file's destination location
+--        compile_path = vim.fn.stdpath("cache") .. "/nightfox",
+--        compile_file_suffix = "_compiled", -- Compiled file suffix
+--        transparent = false,
+--        terminal_colors = false,  -- Set terminal colors (vim.g.terminal_color_*) used in `:terminal`
+--        dim_inactive = true,
+--    }
+--})
+--vim.cmd("colorscheme carbonfox")
+
+-- require('kanagawa').setup({
+--     compile = false,             -- enable compiling the colorscheme
+--     undercurl = true,            -- enable undercurls
+--     commentStyle = { italic = true },
+--     functionStyle = {},
+--     keywordStyle = { italic = true},
+--     statementStyle = { bold = true },
+--     typeStyle = {},
+--     transparent = false,         -- do not set background color
+--     dimInactive = false,         -- dim inactive window `:h hl-NormalNC`
+--     terminalColors = true,       -- define vim.g.terminal_color_{0,17}
+--     colors = {                   -- add/modify theme and palette colors
+--         palette = {},
+--         theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+--     },
+--     overrides = function(colors) -- add/modify highlights
+--         return {}
+--     end,
+--     theme = "wave",              -- Load "wave" theme
+--     background = {               -- map the value of 'background' option to a theme
+--         dark = "wave",           -- try "dragon" !
+--         light = "lotus"
+--     },
+-- })
+-- 
+-- -- setup must be called before loading
+-- vim.cmd("colorscheme kanagawa")
+
 
 -- Plugin: jedi lsp config
 --------------------
