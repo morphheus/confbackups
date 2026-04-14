@@ -666,24 +666,35 @@ require("lazy").setup({
 
     "lambdalisue/vim-cython-syntax",
     "machakann/vim-highlightedyank",
-    {
-      'sainnhe/gruvbox-material',
-      lazy = false,
-      priority = 1000,
-      config = function()
-        -- Optionally configure and load the colorscheme
-        -- directly inside the plugin declaration.
-        vim.g.gruvbox_material_enable_italic = false
-        vim.g.gruvbox_material_enable_bold = true 
-        vim.g.gruvbox_material_transparent_background = 2
-        vim.g.gruvbox_material_background = 'hard'
-        vim.g.gruvbox_material_foreground = 'original'
-        vim.g.gruvbox_material_better_performance = 1
-        vim.cmd.colorscheme('gruvbox-material')
-      end
-    },
+    --{
+    --  'sainnhe/gruvbox-material',
+    --  lazy = false,
+    --  priority = 1000,
+    --  config = function()
+    --    -- Optionally configure and load the colorscheme
+    --    -- directly inside the plugin declaration.
+    --    vim.g.gruvbox_material_enable_italic = false
+    --    vim.g.gruvbox_material_enable_bold = true 
+    --    vim.g.gruvbox_material_transparent_background = 2
+    --    vim.g.gruvbox_material_background = 'hard'
+    --    vim.g.gruvbox_material_foreground = 'original'
+    --    vim.g.gruvbox_material_better_performance = 1
+    --    vim.cmd.colorscheme('gruvbox-material')
+    --  end
+    --},
     --{ "EdenEast/nightfox.nvim" },
-    -- { "rebelot/kanagawa" },
+    --{ "rebelot/kanagawa.nvim" },
+    {
+        "navarasu/onedark.nvim",
+        priority = 1000, -- make sure to load this before all the other start plugins
+        config = function()
+            require('onedark').setup {
+                style = 'darker',
+                transparent = true,
+            }
+            require('onedark').load()
+        end
+    }
   },
   -- automatically check for plugin updates
   checker = { enabled = false },
@@ -726,7 +737,7 @@ require("ibl").setup()
 --     end,
 --     theme = "wave",              -- Load "wave" theme
 --     background = {               -- map the value of 'background' option to a theme
---         dark = "wave",           -- try "dragon" !
+--         dark = "dragon",           -- try "dragon" !
 --         light = "lotus"
 --     },
 -- })
@@ -822,4 +833,5 @@ vim.api.nvim_create_autocmd("VimEnter", {
   pattern = "*.tex",
   command = "SetLayoutTex",
 })
+
 
